@@ -56,6 +56,18 @@ class MyApp extends StatelessWidget {
         "AddNote":(context) => AddNote(),
         "SplashScreen":(context) => splashScreen()
       },
+
+
+
+
+
+
+
+
+
+
+
+      
       theme: ThemeData(
         primaryColor: Color(0xFF6034A6),
         textTheme: TextTheme(
