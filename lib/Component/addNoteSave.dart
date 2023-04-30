@@ -17,9 +17,9 @@ class AddNoteSave{
 
   saveData() async{
     CollectionReference userId = await FirebaseFirestore.instance.collection("users");
-      userId.doc(id).set({
-        "title" : noteTitle,
-        "content" : noteContent,
-      });
+    userId.doc(id).collection("userNotes").doc(noteId).set({
+      "title" : noteTitle,
+      "content" : noteContent,
+    });
   }
 }

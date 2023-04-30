@@ -1,9 +1,10 @@
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:notes/Component/addNoteAppbar.dart';
+import 'package:notes/Home/home.dart';
 
 class AddNote extends StatefulWidget{
   const AddNote({super.key});
@@ -13,15 +14,19 @@ class AddNote extends StatefulWidget{
 class _AddNoteState extends State<AddNote>{
   GlobalKey<FormState> _formState = new GlobalKey<FormState>();
   TextEditingController titleController = new TextEditingController();
-  TextEditingController bodyController = new TextEditingController();
+  TextEditingController contentController = new TextEditingController();
   late String id;
+  late String username;
+  late String email;
   late String noteId;
 
   getUserID() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     id = prefs.getString("id")??"";
+    username = prefs.getString("username")??"";
+    email = prefs.getString("email")??"";
   }
-
+  
   createNoteId(){
     String firstRandom = Random().nextInt(99999).toString();
     String secondRandom = Random().nextInt(99999).toString();
@@ -40,7 +45,46 @@ class _AddNoteState extends State<AddNote>{
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AddNoteAppbar(),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF6034A6),
+          foregroundColor: Colors.white,
+          leadingWidth: 150,
+          leading: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+              ),
+              TextButton(
+                onPressed: () async{
+                  if(titleController.text != "" || contentController.text != ""){
+                    CollectionReference userId = await FirebaseFirestore.instance.collection("notes");
+                    userId.doc(id).collection("userNotes").doc(noteId).set({
+                      "title" : titleController.text,
+                      "content" : contentController.text,
+                    });
+                    Navigator.of(context).pop();
+                  }
+                  else{
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Text("Notes", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
+              )
+            ],
+          ),
+          actions: [
+            MediaQuery.of(context).viewInsets.bottom != 0 ?
+            Container(alignment: Alignment.center,
+            padding: EdgeInsets.only(right: 15),
+              child: InkWell(
+                onTap: ()=> FocusScope.of(context).unfocus(),
+                child: Text("Done", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white))
+              ),
+            ):
+            SizedBox()
+          ],
+        ),
         body: 
           Container(
             // alignment: Alignment.center,
@@ -76,7 +120,7 @@ class _AddNoteState extends State<AddNote>{
                       ),
                     ),
                     TextFormField(
-                      controller: bodyController,
+                      controller: contentController,
                       keyboardType: TextInputType.text,
                       minLines: 18,
                       maxLines: null,

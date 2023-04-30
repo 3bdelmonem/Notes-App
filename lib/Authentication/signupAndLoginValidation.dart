@@ -67,11 +67,11 @@ class SignupAndLoginValidation {
                   },
                   child: Text("Login", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   style: ElevatedButton.styleFrom(
-                            minimumSize: Size(135, 40),
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(60))),
+                    minimumSize: Size(135, 40),
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(60))),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -79,12 +79,12 @@ class SignupAndLoginValidation {
                   },
                   child: Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                   style: ElevatedButton.styleFrom(
-                            minimumSize: Size(135, 40),
-                            backgroundColor: Color(0xFF0F0F1E),
-                            foregroundColor: Colors.red,
-                            shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.red, width: 3, strokeAlign: BorderSide.strokeAlignInside),
-                                borderRadius: BorderRadius.circular(60))),
+                    minimumSize: Size(135, 40),
+                    backgroundColor: Color(0xFF0F0F1E),
+                    foregroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.red, width: 3, strokeAlign: BorderSide.strokeAlignInside),
+                        borderRadius: BorderRadius.circular(60))),
                 )
               ],
             );

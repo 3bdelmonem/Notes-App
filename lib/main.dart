@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AddNote(),
+      home: Home(id: id, username: username, email: email,),
       // home: isActive == true ? Home(id: id, username: username, email: email,) : splashScreen(),
       debugShowCheckedModeBanner: false,
       routes: {

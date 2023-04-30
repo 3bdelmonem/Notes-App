@@ -85,10 +85,7 @@ class ListNotes extends StatelessWidget{
       margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
         gradient: RadialGradient(
-          colors: [
-            Color(0xFF6034A6),
-            Color(0xFF4833A6)
-          ],
+          colors: [Color(0xFF6034A6),Color(0xFF4833A6)],
           radius: 2.5,
         ),
         borderRadius: BorderRadius.circular(15)
@@ -97,7 +94,15 @@ class ListNotes extends StatelessWidget{
         contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         leading: Icon(Icons.note, color: Color(0xFF0F0F1E), size: 50),
         title: Text("${notes["noteTitle"]}", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),),
-        subtitle: Text("${notes["noteContent"]}", style: TextStyle(color: Color(0xFFAEAEB3), fontSize: 11)),
+        subtitle: SizedBox(
+          width: 150,
+          child: Text(
+            "${notes["noteContent"]}",
+            style: TextStyle(color: Color(0xFFAEAEB3), fontSize: 11),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
+          ),
+        ),
         trailing: IconButton(
           onPressed: () {},
           icon: Icon(Icons.edit, color: Color(0xFF0F0F1E), size: 40),
