@@ -3,10 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Crud/editNote.dart';
-import 'package:notes/Home/drawer.dart';
-import 'package:notes/Home/data.dart';
+import 'package:notes/Component/drawer.dart';
+import 'package:notes/Component/data.dart';
 import 'package:notes/main.dart';
-import '../Crud/showNote.dart';
 
 class Home extends StatefulWidget {
   final String id;

@@ -6,16 +6,7 @@ import 'package:notes/Crud/addNote.dart';
 import 'package:notes/Home/home.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:notes/Test/AnonymousAuth.dart';
-import 'package:notes/Test/GoogleAuth.dart';
-import 'package:notes/Test/PasswordAuth.dart';
 import 'package:notes/Authentication/splashScreen.dart';
-import 'package:notes/Home/drawer.dart';
-import 'package:notes/Test/fireStoreUi.dart';
-import 'package:notes/Test/futureFirestoreUi.dart';
-import 'package:notes/Test/streamFirestore.dart';
-import 'package:notes/Test/firebaseStrorage.dart';
-import 'package:notes/Test/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -46,13 +37,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Home(id: id, username: username, email: email,),
-      // home: isActive == true ? Home(id: id, username: username, email: email,) : splashScreen(),
+      // home: Home(id: id, username: username, email: email,),
+      home: isActive == true ? Home(id: id, username: username, email: email,) : splashScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         "Login":(context) =>  Login(),
         "SignUp":(context) => SignUp(),
-        // "Home":(context) => Home(),
         "AddNote":(context) => AddNote(),
         "SplashScreen":(context) => splashScreen()
       },
