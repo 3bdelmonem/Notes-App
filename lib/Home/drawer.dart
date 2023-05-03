@@ -74,7 +74,7 @@ class Mydrawer extends StatelessWidget {
                     ),
                     title: Text("Notes", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                     onTap: () {
-                      Navigator.of(context).pushNamed("Home");
+                      Navigator.of(context).pop();
                     },
                   ),
                   Divider(color: Color(0xFF0F0F1E), indent: 15, endIndent: 15, thickness: 2,),

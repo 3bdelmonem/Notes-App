@@ -6,33 +6,39 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:notes/Component/addNoteAppbar.dart';
 import 'package:notes/Home/home.dart';
 
-class AddNote extends StatefulWidget{
-  const AddNote({super.key});
+class EditNote extends StatefulWidget{
+  final String noteId;
+  final String title;
+  final String content;
+
+  const EditNote({
+    required this.noteId,
+    required this.title,
+    required this.content,
+    super.key
+  });
   @override
-  State<AddNote> createState() => _AddNoteState();
+  State<EditNote> createState() => _EditNoteState();
 }
-class _AddNoteState extends State<AddNote>{
+
+class _EditNoteState extends State<EditNote>{
   GlobalKey<FormState> _formState = new GlobalKey<FormState>();
-  TextEditingController titleController = new TextEditingController();
-  TextEditingController contentController = new TextEditingController();
+  late TextEditingController titleController = new TextEditingController(text: widget.title);
+  late TextEditingController contentController = new TextEditingController(text: widget.content);
   late String id;
-  late String noteId;
+  late String username;
+  late String email;  
 
   getUserID() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     id = prefs.getString("id")??"";
+    username = prefs.getString("username")??"";
+    email = prefs.getString("email")??"";
   }
-  
-  createNoteId(){
-    String firstRandom = Random().nextInt(99999).toString();
-    String secondRandom = Random().nextInt(99999).toString();
-    noteId = "${firstRandom}ABDELMONEM${secondRandom}";
-  }  
 
   @override
   void initState() {
     getUserID();
-    createNoteId();
     super.initState();
   }
 
@@ -54,16 +60,40 @@ class _AddNoteState extends State<AddNote>{
               TextButton(
                 onPressed: () async{
                   if(titleController.text != "" || contentController.text != ""){
-                    CollectionReference userId = await FirebaseFirestore.instance.collection("notes");
-                    userId.doc(id).collection("userNotes").doc(noteId).set({
+                    CollectionReference noteUpdate = await FirebaseFirestore.instance.collection("notes").doc(id).collection("userNotes");
+                    noteUpdate.doc(widget.noteId).update({
                       "title" : titleController.text,
                       "content" : contentController.text,
-                      "noteId" : noteId
+                    }).then((value) {
+                      print("Updated Successfully");
+                    }).catchError((e){
+                      print("Error = $e");
                     });
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
+                      id: id,
+                      username: username,
+                      email: email,
+                    )));
+                  }
+                  else if(titleController.text == "" && contentController.text == ""){
+                    CollectionReference noteUpdate = await FirebaseFirestore.instance.collection("notes").doc(id).collection("userNotes");
+                    noteUpdate.doc(widget.noteId).delete().then((value) {
+                      print("Deleted Successfully");
+                    }).catchError((e){
+                      print("Error = $e");
+                    });
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
+                      id: id,
+                      username: username,
+                      email: email,
+                    )));
                   }
                   else{
-                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
+                      id: id,
+                      username: username,
+                      email: email,
+                    )));
                   }
                 },
                 child: Text("Notes", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
@@ -84,7 +114,6 @@ class _AddNoteState extends State<AddNote>{
         ),
         body: 
           Container(
-            // alignment: Alignment.center,
             height: double.infinity,
             padding: EdgeInsets.all(10),
             color: Color(0xFF0F0F1E),
@@ -95,6 +124,7 @@ class _AddNoteState extends State<AddNote>{
                 child: Column(
                   children: [
                     TextFormField(
+                      // initialValue: "${widget.title}",
                       controller: titleController,
                       keyboardType: TextInputType.text,
                       maxLength: 65,
@@ -117,6 +147,7 @@ class _AddNoteState extends State<AddNote>{
                       ),
                     ),
                     TextFormField(
+                      // initialValue: "${widget.content}",
                       controller: contentController,
                       keyboardType: TextInputType.text,
                       minLines: 18,

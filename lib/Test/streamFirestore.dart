@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class StreamFiretore extends StatefulWidget {
   const StreamFiretore({super.key});
-
   @override
   State<StreamFiretore> createState() => _StreamFiretoreState();
 }

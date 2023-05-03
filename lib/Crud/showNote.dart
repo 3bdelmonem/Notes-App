@@ -2,40 +2,30 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:notes/Crud/editNote.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:notes/Component/addNoteAppbar.dart';
 import 'package:notes/Home/home.dart';
 
-class AddNote extends StatefulWidget{
-  const AddNote({super.key});
+class showNote extends StatefulWidget{
+  final String id;
+  final String noteId;
+  final String title;
+  final String content;
+
+  const showNote({
+    required this.id,
+    required this.noteId,
+    required this.title,
+    required this.content,
+    super.key
+  });
   @override
-  State<AddNote> createState() => _AddNoteState();
+  State<showNote> createState() => _showNoteState();
 }
-class _AddNoteState extends State<AddNote>{
+class _showNoteState extends State<showNote>{
   GlobalKey<FormState> _formState = new GlobalKey<FormState>();
-  TextEditingController titleController = new TextEditingController();
-  TextEditingController contentController = new TextEditingController();
-  late String id;
-  late String noteId;
-
-  getUserID() async{
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    id = prefs.getString("id")??"";
-  }
   
-  createNoteId(){
-    String firstRandom = Random().nextInt(99999).toString();
-    String secondRandom = Random().nextInt(99999).toString();
-    noteId = "${firstRandom}ABDELMONEM${secondRandom}";
-  }  
-
-  @override
-  void initState() {
-    getUserID();
-    createNoteId();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context){
     return GestureDetector(
@@ -52,34 +42,27 @@ class _AddNoteState extends State<AddNote>{
                 child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
               ),
               TextButton(
-                onPressed: () async{
-                  if(titleController.text != "" || contentController.text != ""){
-                    CollectionReference userId = await FirebaseFirestore.instance.collection("notes");
-                    userId.doc(id).collection("userNotes").doc(noteId).set({
-                      "title" : titleController.text,
-                      "content" : contentController.text,
-                      "noteId" : noteId
-                    });
-                    Navigator.of(context).pop();
-                  }
-                  else{
-                    Navigator.of(context).pop();
-                  }
+                onPressed: (){
+                  Navigator.of(context).pop();
                 },
                 child: Text("Notes", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
               )
             ],
           ),
           actions: [
-            MediaQuery.of(context).viewInsets.bottom != 0 ?
             Container(alignment: Alignment.center,
             padding: EdgeInsets.only(right: 15),
               child: InkWell(
-                onTap: ()=> FocusScope.of(context).unfocus(),
-                child: Text("Done", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white))
+                onTap: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => EditNote(
+                    noteId: widget.noteId,
+                    title: widget.title,
+                    content: widget.content,    
+                  )));
+                },
+                child: Text("Edit", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white))
               ),
-            ):
-            SizedBox()
+            )
           ],
         ),
         body: 
@@ -95,7 +78,9 @@ class _AddNoteState extends State<AddNote>{
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: titleController,
+                      readOnly: true,
+                      initialValue: "${widget.title}",
+                      // controller: titleController,
                       keyboardType: TextInputType.text,
                       maxLength: 65,
                       maxLines: null,
@@ -117,7 +102,9 @@ class _AddNoteState extends State<AddNote>{
                       ),
                     ),
                     TextFormField(
-                      controller: contentController,
+                      readOnly: true,
+                      initialValue: "${widget.content}",
+                      // controller: contentController,
                       keyboardType: TextInputType.text,
                       minLines: 18,
                       maxLines: null,
