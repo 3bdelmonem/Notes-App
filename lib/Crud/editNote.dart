@@ -69,11 +69,7 @@ class _EditNoteState extends State<EditNote>{
                     }).catchError((e){
                       print("Error = $e");
                     });
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
-                      id: id,
-                      username: username,
-                      email: email,
-                    )));
+                    Navigator.of(context).pop();
                   }
                   else if(titleController.text == "" && contentController.text == ""){
                     CollectionReference noteUpdate = await FirebaseFirestore.instance.collection("notes").doc(id).collection("userNotes");
@@ -82,18 +78,10 @@ class _EditNoteState extends State<EditNote>{
                     }).catchError((e){
                       print("Error = $e");
                     });
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
-                      id: id,
-                      username: username,
-                      email: email,
-                    )));
+                    Navigator.of(context).pop();
                   }
                   else{
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
-                      id: id,
-                      username: username,
-                      email: email,
-                    )));
+                    Navigator.of(context).pop();
                   }
                 },
                 child: Text("Notes", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
@@ -115,7 +103,7 @@ class _EditNoteState extends State<EditNote>{
         body: 
           Container(
             height: double.infinity,
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
             color: Color(0xFF0F0F1E),
             child:SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -124,7 +112,6 @@ class _EditNoteState extends State<EditNote>{
                 child: Column(
                   children: [
                     TextFormField(
-                      // initialValue: "${widget.title}",
                       controller: titleController,
                       keyboardType: TextInputType.text,
                       maxLength: 65,
@@ -147,7 +134,6 @@ class _EditNoteState extends State<EditNote>{
                       ),
                     ),
                     TextFormField(
-                      // initialValue: "${widget.content}",
                       controller: contentController,
                       keyboardType: TextInputType.text,
                       minLines: 18,

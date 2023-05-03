@@ -86,15 +86,14 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(15)),
                       child: ListTile(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => showNote(
-                            id: id,
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditNote(
                             noteId: snapshot.data!.docs[index]["noteId"],
                             title: snapshot.data!.docs[index]["title"],
                             content: snapshot.data!.docs[index]["content"],
                           )));
                         },
                         contentPadding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                            EdgeInsets.fromLTRB(10, 5, 15, 5),
                         leading: Icon(Icons.note, color: Color(0xFF0F0F1E), size: 50),
                         title: Text(
                           "${snapshot.data!.docs[index]["title"]}",
@@ -107,16 +106,6 @@ class _HomeState extends State<Home> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 3,
                           ),
-                        ),
-                        trailing: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditNote(
-                              noteId: snapshot.data!.docs[index]["noteId"],
-                              title: snapshot.data!.docs[index]["title"],
-                              content: snapshot.data!.docs[index]["content"],
-                            )));
-                          },
-                          icon: Icon(Icons.edit, color: Color(0xFF0F0F1E), size: 40),
                         ),
                         isThreeLine: true,
                       ),
