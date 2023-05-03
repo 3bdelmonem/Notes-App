@@ -9,7 +9,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 late bool isActive;
 late String id;
 late String username;
