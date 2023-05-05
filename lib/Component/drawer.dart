@@ -29,12 +29,13 @@ class Mydrawer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 40,
                     backgroundColor: Color(0xFF6034A6),
-                    backgroundImage: AssetImage("Assets/abdelmonem.JPG"),
-                    
+                    radius: 40,
+                    child: CircleAvatar(
+                      radius: 37,
+                      backgroundImage: AssetImage("Assets/avatar.png"),
+                    ),
                   ),
-            
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: Column(
@@ -128,7 +129,7 @@ class Mydrawer extends StatelessWidget {
                     ),
                     title: Text("Help", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                     onTap: () {
-                      // Navigator.of(context).pushNamed("Home");
+                      Navigator.of(context).pushNamed("Help");
                     },
                   ),
                   Divider(color: Color(0xFF0F0F1E), indent: 15, endIndent: 15, thickness: 2,),

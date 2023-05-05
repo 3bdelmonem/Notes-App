@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Authentication/login.dart';
 import 'package:notes/Authentication/signUp.dart';
+import 'package:notes/Component/help.dart';
 import 'package:notes/Crud/addNote.dart';
 import 'package:notes/Home/home.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // home: Help(),
       // home: Home(id: id, username: username, email: email,),
       home: isActive == true ? Home(id: id, username: username, email: email,) : splashScreen(),
       debugShowCheckedModeBanner: false,
@@ -43,7 +45,8 @@ class MyApp extends StatelessWidget {
         "Login":(context) =>  Login(),
         "SignUp":(context) => SignUp(),
         "AddNote":(context) => AddNote(),
-        "SplashScreen":(context) => splashScreen()
+        "SplashScreen":(context) => splashScreen(),
+        "Help":(context) => HelpScreen()
       },
       theme: ThemeData(
         primaryColor: Color(0xFF6034A6),

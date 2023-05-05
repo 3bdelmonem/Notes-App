@@ -45,7 +45,7 @@ class _SignUpState extends State<SignUp> {
             children: [
               Center(
                   child: Image.asset(
-                "Assets/notes-logo.png",
+                "Assets/notesLogo.png",
                 height: 250,
                 fit: BoxFit.contain,
               )),

@@ -14,7 +14,7 @@ class _splashScreenState extends State<splashScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(child: Image.asset("Assets/notes-logo.png", height: 250, fit: BoxFit.contain)),
+          Center(child: Image.asset("Assets/notesLogo.png", height: 250, fit: BoxFit.contain)),
           Padding(
             padding: const EdgeInsets.only(top: 70),
             child: ElevatedButton(

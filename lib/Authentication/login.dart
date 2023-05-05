@@ -31,7 +31,7 @@ class _LoginState extends State<Login>{
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Center(child: Image.asset("Assets/notes-logo.png", height: 250, fit: BoxFit.contain,)),
+                Center(child: Image.asset("Assets/notesLogo.png", height: 250, fit: BoxFit.contain,)),
                 Form(
                   key: _formState,
                   child: Column(
