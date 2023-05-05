@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 class Mydrawer extends StatelessWidget {
   
   late String myUsername, myEmail;
-
   Mydrawer(String username, String email){
     myUsername = username;
     myEmail = email;
   }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -33,6 +31,7 @@ class Mydrawer extends StatelessWidget {
                     radius: 40,
                     child: CircleAvatar(
                       radius: 37,
+                      backgroundColor: Color(0xFF0F0F1E),
                       backgroundImage: AssetImage("Assets/avatar.png"),
                     ),
                   ),
@@ -111,7 +110,7 @@ class Mydrawer extends StatelessWidget {
                     ),
                     title: Text("Setting", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                     onTap: () {
-                      // Navigator.of(context).pushNamed("Home");
+                      Navigator.of(context).pushNamed("Setting");
                     },
                   ),
                   Divider(color: Color(0xFF0F0F1E), indent: 15, endIndent: 15, thickness: 2,),

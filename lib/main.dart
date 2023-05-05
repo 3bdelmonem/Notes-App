@@ -5,10 +5,11 @@ import 'package:notes/Authentication/signUp.dart';
 import 'package:notes/Component/help.dart';
 import 'package:notes/Crud/addNote.dart';
 import 'package:notes/Home/home.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'Component/setting.dart';
 
 late bool isActive;
 late String id;
@@ -46,7 +47,9 @@ class MyApp extends StatelessWidget {
         "SignUp":(context) => SignUp(),
         "AddNote":(context) => AddNote(),
         "SplashScreen":(context) => splashScreen(),
-        "Help":(context) => HelpScreen()
+        "Help":(context) => HelpScreen(),
+        "Setting":(context) => Setting()
+
       },
       theme: ThemeData(
         primaryColor: Color(0xFF6034A6),
