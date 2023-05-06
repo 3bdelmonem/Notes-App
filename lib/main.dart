@@ -8,13 +8,13 @@ import 'package:notes/Home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Component/setting.dart';
 
 late bool isActive;
 late String id;
 late String username;
 late String email;
+late String password;
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +29,7 @@ void main() async{
     id = prefs.getString("id")??"";
     username = prefs.getString("username")??"";
     email = prefs.getString("email")??"";
+    password = prefs.getString("password")??"";
     isActive = true;
   }
   runApp(MyApp());
@@ -38,9 +39,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // home: Help(),
       // home: Home(id: id, username: username, email: email,),
-      home: isActive == true ? Home(id: id, username: username, email: email,) : splashScreen(),
+      home: isActive == true ? Home(id: id, username: username, email: email, password: password,) : splashScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         "Login":(context) =>  Login(),
@@ -48,8 +48,6 @@ class MyApp extends StatelessWidget {
         "AddNote":(context) => AddNote(),
         "SplashScreen":(context) => splashScreen(),
         "Help":(context) => HelpScreen(),
-        "Setting":(context) => Setting()
-
       },
       theme: ThemeData(
         primaryColor: Color(0xFF6034A6),

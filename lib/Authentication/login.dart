@@ -13,9 +13,9 @@ class _LoginState extends State<Login>{
   GlobalKey<FormState> _formState = new GlobalKey<FormState>();
   
   bool seePassword = true;
-  var hiddenIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22);
-  var visibleIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
-  var passordIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22);
+  Icon hiddenIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22);
+  Icon visibleIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
+  Icon passordIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22);
 
   @override
   Widget build(BuildContext context){

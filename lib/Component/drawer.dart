@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/Component/setting.dart';
 
 class Mydrawer extends StatelessWidget {
-  
-  late String myUsername, myEmail;
-  Mydrawer(String username, String email){
+  late String myUsername, myEmail, myPassword;
+  Mydrawer(String username, String email, String password){
     myUsername = username;
     myEmail = email;
+    myPassword = password;
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -78,7 +81,6 @@ class Mydrawer extends StatelessWidget {
                     },
                   ),
                   Divider(color: Color(0xFF0F0F1E), indent: 15, endIndent: 15, thickness: 2,),
-
                   ListTile(
                     leading: Container(
                       width: 50,
@@ -96,7 +98,6 @@ class Mydrawer extends StatelessWidget {
                     },
                   ),
                   Divider(color: Color(0xFF0F0F1E), indent: 15, endIndent: 15, thickness: 2,),
-
                   ListTile(
                     leading: Container(
                       width: 50,
@@ -110,11 +111,14 @@ class Mydrawer extends StatelessWidget {
                     ),
                     title: Text("Setting", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                     onTap: () {
-                      Navigator.of(context).pushNamed("Setting");
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => Setting(
+                        username: myUsername,
+                        email: myEmail,
+                        password: myPassword,
+                      )));
                     },
                   ),
                   Divider(color: Color(0xFF0F0F1E), indent: 15, endIndent: 15, thickness: 2,),
-
                   ListTile(
                     leading: Container(
                       width: 50,

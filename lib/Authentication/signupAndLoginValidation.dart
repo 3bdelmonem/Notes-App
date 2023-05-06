@@ -33,10 +33,12 @@ class SignupAndLoginValidation {
       prefs.setString("id", id);
       prefs.setString("username", username);
       prefs.setString("email", email);
+      prefs.setString("password", password);
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
         id: id,
         username: username,
         email: email,
+        password: password,
       )));
       return credential;
     }
@@ -117,10 +119,12 @@ class SignupAndLoginValidation {
       await prefs.setString("id", id);
       await prefs.setString("username", username);
       await prefs.setString("email", email);
+      await prefs.setString("password", password);
       await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
         id: id,
         username: username,
         email: email,
+        password: password,
       )));
       return credential;
     } 

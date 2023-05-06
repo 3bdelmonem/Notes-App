@@ -11,12 +11,16 @@ class Home extends StatefulWidget {
   final String id;
   final String username;
   final String email;
+  final String password;
 
-  const Home(
-      {required this.id,
-      required this.email,
-      required this.username,
-      super.key});
+
+  const Home({
+    required this.id,
+    required this.email,
+    required this.username,
+    required this.password,
+    super.key
+  });
   @override
   State<Home> createState() => _HomeState();
 }
@@ -33,7 +37,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
       ),
-      drawer: Mydrawer(widget.username, widget.email),
+      drawer: Mydrawer(widget.username, widget.email, widget.password),
       floatingActionButton: FloatingActionButton(
         onPressed: (() {
           Navigator.of(context).pushNamed("AddNote");
