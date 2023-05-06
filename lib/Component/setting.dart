@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Component/settingInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -82,12 +83,41 @@ class _SettingState extends State<Setting> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SettingInfo(title: "Username", content: widget.username),
-                      SettingInfo(title: "Email", content: widget.email),
-                      SettingInfo(title: "Password", content: widget.password),
+                      SettingInfo(title: "Username", content: widget.username, enableEditing: true,),
+                      SettingInfo(title: "Email", content: widget.email, enableEditing: false),
+                      SettingInfo(title: "Password", content: widget.password, enableEditing: false),
                     ],
                   ),
-                )
+                ),
+                ElevatedButton(
+                  onPressed: () async{
+                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    final SharedPreferences changes = await SharedPreferences.getInstance();
+                    String newUsername = changes.getString("newUsername")??"";
+                    String id = prefs.getString("id")??"";
+                    if(newUsername != "" && !newUsername.startsWith(" ") && newUsername != widget.username){
+                      prefs.setString("username", newUsername);
+                      CollectionReference userUpdate = await FirebaseFirestore.instance.collection("users");
+                      userUpdate.doc(id).update({
+                        "username": newUsername,
+                      }).then((value) {
+                        print("Updated Successfully");
+                      }).catchError((e){
+                        print("Error = $e");
+                      });
+                    }
+                  },
+                  child: Text("Save Changes", style: Theme.of(context).textTheme.labelLarge),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(370, 60),
+                    backgroundColor: Color(0xFF6034A6),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60)
+                    )
+                  ),
+                ),
+                
               ],
             ),
           ),

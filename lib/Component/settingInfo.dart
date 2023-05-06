@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class SettingInfo extends StatefulWidget {
   final String title;
   final String content;
+  final bool enableEditing;
   const SettingInfo({
     required this.title,
     required this.content,
+    required this.enableEditing,
     super.key
   });
   @override
@@ -50,20 +53,21 @@ class _SettingInfoState extends State<SettingInfo> {
             ),
           ),
           TextFormField(
+            readOnly: !widget.enableEditing,
             controller: contentController,
-              validator: (value) {
-                if (value!.length < 3 || value == null){
-                return "username can't be empty";
+              onChanged: (value) async{
+                final SharedPreferences changes = await SharedPreferences.getInstance();
+                if (value.length < 3 || value == null){
+                  await changes.setString("newUsername", "");
                 }
                 else{
-                  return null; 
+                  await changes.setString("newUsername", value);
                 }
               },
               cursorColor: Color(0xFF6034A6),
               style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
               decoration: InputDecoration(
                 hintText: "${widget.title}",
-                // prefixIcon: changeIcon(),
                 hintStyle: TextStyle(color:Color(0xFFAEAEB3)),
                 // enabled: true,
                 enabledBorder: OutlineInputBorder(
