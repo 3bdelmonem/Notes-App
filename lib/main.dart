@@ -26,6 +26,7 @@ void main() async{
     isActive = false;
   }
   else{
+    prefs.reload();
     id = prefs.getString("id")??"";
     username = prefs.getString("username")??"";
     email = prefs.getString("email")??"";

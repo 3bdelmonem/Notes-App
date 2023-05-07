@@ -20,6 +20,66 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  changePicOptions() {
+    return showModalBottomSheet(backgroundColor: Colors.white.withOpacity(0), context: context, builder: (context) {
+      return Container(
+        padding: EdgeInsets.all(25),
+        height: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
+          color: Color(0xFF6034A6),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                  color: Color(0xFF0F0F1E),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Icon(Icons.camera_alt_outlined, color: Colors.white, size: 30,),
+                ),
+                InkWell(
+                  onTap: () {
+                    
+                  },
+                  child: Text("Open Camera", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+                )
+              ],
+            ),
+            Divider(color: Color(0xFF0F0F1E), thickness: 2.5,),
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(right: 10),
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                  color: Color(0xFF0F0F1E),
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Icon(Icons.photo_album_outlined, color: Colors.white, size: 30,),
+                ),
+                InkWell(
+                  onTap: () {
+                    
+                  },
+                  child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+                )
+              ],
+            )
+          ],
+        ),
+      );
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -73,7 +133,7 @@ class _SettingState extends State<Setting> {
                 Padding(
                   padding: const EdgeInsets.only(top: 85),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () => changePicOptions(),
                     child: Text("Change Picture",textAlign: TextAlign.center ,style: TextStyle(color: Color(0xFF6034A6), fontSize: 18, fontWeight: FontWeight.bold),),
                   ),
                 ),
@@ -95,8 +155,12 @@ class _SettingState extends State<Setting> {
                     final SharedPreferences changes = await SharedPreferences.getInstance();
                     String newUsername = changes.getString("newUsername")??"";
                     String id = prefs.getString("id")??"";
-                    if(newUsername != "" && !newUsername.startsWith(" ") && newUsername != widget.username){
+                    if(newUsername == "" || newUsername.startsWith(" ") || newUsername == widget.username){
+                      Navigator.of(context).pop();
+                    }
+                    else{
                       prefs.setString("username", newUsername);
+                      prefs.reload();
                       CollectionReference userUpdate = await FirebaseFirestore.instance.collection("users");
                       userUpdate.doc(id).update({
                         "username": newUsername,
@@ -105,6 +169,7 @@ class _SettingState extends State<Setting> {
                       }).catchError((e){
                         print("Error = $e");
                       });
+                      Navigator.of(context).pop();
                     }
                   },
                   child: Text("Save Changes", style: Theme.of(context).textTheme.labelLarge),

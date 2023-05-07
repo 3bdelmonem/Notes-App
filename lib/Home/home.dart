@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Crud/editNote.dart';
 import 'package:notes/Component/drawer.dart';
-import 'package:notes/Component/data.dart';
-import 'package:notes/main.dart';
 
 class Home extends StatefulWidget {
   final String id;
