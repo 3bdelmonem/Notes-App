@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Component/setting.dart';
-
 class Mydrawer extends StatelessWidget {
   late String myUsername, myEmail, myPassword;
   Mydrawer(String username, String email, String password){
@@ -9,8 +8,6 @@ class Mydrawer extends StatelessWidget {
     myEmail = email;
     myPassword = password;
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Drawer(

@@ -1,9 +1,11 @@
+import 'dart:io';
+import 'dart:math';
+import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:notes/Component/settingInfo.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-
+import 'package:image_picker/image_picker.dart';
+import 'package:notes/Component/cardInfo.dart';
 class Setting extends StatefulWidget {
   late String username;
   late String email;
@@ -20,14 +22,45 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  changePicOptions() {
-    return showModalBottomSheet(backgroundColor: Colors.white.withOpacity(0), context: context, builder: (context) {
+  late File file;
+  late Reference  refStorage;
+  ImagePicker imgpicker = ImagePicker();
+  String? url;
+  String? newImage;
+
+  uploadImageFromCamera() async{
+    XFile? img = await imgpicker.pickImage(source: ImageSource.camera);
+    if(img != null){
+      file = File(img.path);
+      newImage = img.path;
+      String imgName = "$widget.id";
+      refStorage = FirebaseStorage.instance.ref("Assets/$imgName");
+    }
+    else{
+      print("there is no image");
+    }
+  }
+  uploadImageFromGallery() async{
+    XFile? img = await imgpicker.pickImage(source: ImageSource.gallery);
+    if(img != null){
+      file = File(img.path);
+      newImage = img.path;
+      String imgName = "$widget.id";
+      refStorage = FirebaseStorage.instance.ref("Assets/$imgName");
+    }
+    else{
+      print("there is no image");
+    }
+  }
+
+  changePicOptions(context) {
+    return showModalBottomSheet(backgroundColor: Colors.transparent, context: context, builder: (context) {
       return Container(
         padding: EdgeInsets.all(25),
         height: 200,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35)),
-          color: Color(0xFF6034A6),
+          color: Color(0xFF0F0F1E),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -40,20 +73,18 @@ class _SettingState extends State<Setting> {
                   height: 50,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                  color: Color(0xFF0F0F1E),
+                  color: Color(0xFF6034A6),
                     borderRadius: BorderRadius.circular(10)
                   ),
                   child: Icon(Icons.camera_alt_outlined, color: Colors.white, size: 30,),
                 ),
                 InkWell(
-                  onTap: () {
-                    
-                  },
+                  onTap: ()=> uploadImageFromCamera(),
                   child: Text("Open Camera", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                 )
               ],
             ),
-            Divider(color: Color(0xFF0F0F1E), thickness: 2.5,),
+            Divider(color: Color(0xFF6034A6), thickness: 3,),
             Row(
               children: [
                 Container(
@@ -62,15 +93,13 @@ class _SettingState extends State<Setting> {
                   height: 50,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                  color: Color(0xFF0F0F1E),
+                  color: Color(0xFF6034A6),
                     borderRadius: BorderRadius.circular(10)
                   ),
                   child: Icon(Icons.photo_album_outlined, color: Colors.white, size: 30,),
                 ),
                 InkWell(
-                  onTap: () {
-                    
-                  },
+                  onTap: ()=> uploadImageFromGallery(),
                   child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                 )
               ],
@@ -85,8 +114,9 @@ class _SettingState extends State<Setting> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: Color(0xFF0F0F1E),
+        backgroundColor: Color(0xFF6034A6),
         appBar: AppBar(
+          elevation: 0,
           backgroundColor: Color(0xFF6034A6),
           foregroundColor: Colors.white,
           leading: Padding(
@@ -110,21 +140,21 @@ class _SettingState extends State<Setting> {
                   clipBehavior: Clip.none,
                   children: [
                     Container(
-                      color: Color(0xFF6034A6),
+                      color: Color(0xFF0F0F1E),
                       width: double.infinity,
                       height: 150,
                       padding: EdgeInsets.only(top: 30),
-                      child: Text("Edit Your Information",textAlign: TextAlign.center ,style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+                      child: Text("Don't Forget To Smile",textAlign: TextAlign.center ,style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
                     ),
                     Positioned(
                       top: 80,
                       child: CircleAvatar(
-                        backgroundColor: Color(0xFF0F0F1E),
+                        backgroundColor: Color(0xFF6034A6),
                         radius: 75,
                         child: CircleAvatar(
                           radius: 70,
-                          backgroundColor: Color(0xFF6034A6),
-                          backgroundImage: AssetImage("Assets/avatar.png"),
+                          backgroundColor: Color(0xFF0F0F1E),
+                          backgroundImage: newImage == null ? AssetImage("Assets/avatar.png") : AssetImage("$newImage")
                         ),
                       ),
                     )
@@ -133,8 +163,8 @@ class _SettingState extends State<Setting> {
                 Padding(
                   padding: const EdgeInsets.only(top: 85),
                   child: InkWell(
-                    onTap: () => changePicOptions(),
-                    child: Text("Change Picture",textAlign: TextAlign.center ,style: TextStyle(color: Color(0xFF6034A6), fontSize: 18, fontWeight: FontWeight.bold),),
+                    onTap: () => changePicOptions(context),
+                    child: Text("Change Picture",textAlign: TextAlign.center ,style: TextStyle(color: Color(0xFF0F0F1E), fontSize: 22, fontWeight: FontWeight.bold),),
                   ),
                 ),
                 Container(
@@ -143,46 +173,12 @@ class _SettingState extends State<Setting> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SettingInfo(title: "Username", content: widget.username, enableEditing: true,),
-                      SettingInfo(title: "Email", content: widget.email, enableEditing: false),
-                      SettingInfo(title: "Password", content: widget.password, enableEditing: false),
+                      Info(title: "Username", content: widget.username, show: true,),
+                      Info(title: "Email", content: widget.email, show: true),
+                      Info(title: "Password", content: widget.password, show: false),
                     ],
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () async{
-                    final SharedPreferences prefs = await SharedPreferences.getInstance();
-                    final SharedPreferences changes = await SharedPreferences.getInstance();
-                    String newUsername = changes.getString("newUsername")??"";
-                    String id = prefs.getString("id")??"";
-                    if(newUsername == "" || newUsername.startsWith(" ") || newUsername == widget.username){
-                      Navigator.of(context).pop();
-                    }
-                    else{
-                      prefs.setString("username", newUsername);
-                      prefs.reload();
-                      CollectionReference userUpdate = await FirebaseFirestore.instance.collection("users");
-                      userUpdate.doc(id).update({
-                        "username": newUsername,
-                      }).then((value) {
-                        print("Updated Successfully");
-                      }).catchError((e){
-                        print("Error = $e");
-                      });
-                      Navigator.of(context).pop();
-                    }
-                  },
-                  child: Text("Save Changes", style: Theme.of(context).textTheme.labelLarge),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(370, 60),
-                    backgroundColor: Color(0xFF6034A6),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(60)
-                    )
-                  ),
-                ),
-                
               ],
             ),
           ),
