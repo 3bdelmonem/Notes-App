@@ -22,7 +22,7 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  late File file;
+  File? file;
   late Reference  refStorage;
   ImagePicker imgpicker = ImagePicker();
   String? url;
