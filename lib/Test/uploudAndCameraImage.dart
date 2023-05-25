@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 
 class ImageTest extends StatefulWidget {
   const ImageTest({super.key});
-
   @override
   State<ImageTest> createState() => _ImageTestState();
 }
@@ -12,8 +11,16 @@ class ImageTest extends StatefulWidget {
 class _ImageTestState extends State<ImageTest> {
   File? image;
   final imagePicker = ImagePicker();
-  uploadImage() async {
+  chooseFromCamera() async {
     var pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
+    if (pickedImage != null) {
+      setState(() {
+        image = File(pickedImage.path);
+      });
+    }
+  }
+  uploudFromGallery() async {
+    var pickedImage = await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       setState(() {
         image = File(pickedImage.path);
@@ -41,9 +48,18 @@ class _ImageTestState extends State<ImageTest> {
                   ? Text("Image not Found", style: TextStyle(color: Colors.blue, fontSize: 24, fontFamily: "DeliciousHandrawn", fontWeight: FontWeight.bold))
                   : Image.file(image!),
             ),
-            ElevatedButton(
-              onPressed: uploadImage,
-              child: Text("Upload Image", style: TextStyle(fontSize: 24, fontFamily: "DeliciousHandrawn")),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: chooseFromCamera,
+                  child: Text("choose From Camera", style: TextStyle(fontSize: 14, fontFamily: "DeliciousHandrawn")),
+                ),
+                ElevatedButton(
+                  onPressed: uploudFromGallery,
+                  child: Text("Uploud From Gallery", style: TextStyle(fontSize: 14, fontFamily: "DeliciousHandrawn")),
+                ),
+              ],
             )
           ],
         ),
