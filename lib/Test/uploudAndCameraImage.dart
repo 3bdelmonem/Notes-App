@@ -2,14 +2,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class abdelmonem32 extends StatefulWidget {
-  const abdelmonem32({super.key});
+class ImageTest extends StatefulWidget {
+  const ImageTest({super.key});
 
   @override
-  State<abdelmonem32> createState() => _abdelmonem32State();
+  State<ImageTest> createState() => _ImageTestState();
 }
 
-class _abdelmonem32State extends State<abdelmonem32> {
+class _ImageTestState extends State<ImageTest> {
   File? image;
   final imagePicker = ImagePicker();
   uploadImage() async {
@@ -20,7 +20,6 @@ class _abdelmonem32State extends State<abdelmonem32> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
