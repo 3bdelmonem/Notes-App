@@ -40,7 +40,7 @@ class _InfoState extends State<Info> {
     return Container(
       height: 100,
       alignment: Alignment.center,
-      // margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
           color: Color(0xFF0F0F1E),
           borderRadius: BorderRadius.circular(15),

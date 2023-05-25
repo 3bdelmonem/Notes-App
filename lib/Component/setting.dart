@@ -171,9 +171,9 @@ class _SettingState extends State<Setting> {
               
               Container(
                 height: 600,
-                padding: EdgeInsets.all(25),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
                       onTap: () => changePicOptions(context),
@@ -186,11 +186,14 @@ class _SettingState extends State<Setting> {
                         ],
                       ),
                     ),
-                    Info(title: "Username", content: widget.username, show: true,),
-                    Info(title: "Email", content: widget.email, show: true),
-                    Info(title: "Password", content: widget.password, show: false),
-                    Container(
-                      margin: EdgeInsets.only(top: 15),
+                    Column(
+                      children: [
+                        Info(title: "Username", content: widget.username, show: true,),
+                        Info(title: "Email", content: widget.email, show: true),
+                        Info(title: "Password", content: widget.password, show: false),
+                      ],
+                    ),
+                    SizedBox(
                       height: 100,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
