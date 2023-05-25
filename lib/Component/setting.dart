@@ -114,73 +114,109 @@ class _SettingState extends State<Setting> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        backgroundColor: Color(0xFF6034A6),
+        backgroundColor: Color(0xFF0F0F1E),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Color(0xFF6034A6),
           foregroundColor: Colors.white,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+          leadingWidth: 150,
+          leading: InkWell(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+                ),
+                Text("Setting", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
+              ],
             ),
           ),
         ),
         body: Container(
-          child: SingleChildScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            physics: MediaQuery.of(context).viewInsets.bottom != 0 ? BouncingScrollPhysics() : NeverScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                Stack(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                child: Stack(
                   alignment: Alignment.center,
                   clipBehavior: Clip.none,
                   children: [
                     Container(
-                      color: Color(0xFF0F0F1E),
                       width: double.infinity,
-                      height: 150,
+                      height: 100,
                       padding: EdgeInsets.only(top: 30),
-                      child: Text("Don't Forget To Smile",textAlign: TextAlign.center ,style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+                      decoration: BoxDecoration(
+                        color: Color(0xFF6034A6),
+                        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                      ),
                     ),
                     Positioned(
-                      top: 80,
+                      top: 20,
                       child: CircleAvatar(
-                        backgroundColor: Color(0xFF6034A6),
-                        radius: 75,
+                        backgroundColor: Color(0xFF0F0F1E),
+                        radius: 85,
                         child: CircleAvatar(
-                          radius: 70,
-                          backgroundColor: Color(0xFF0F0F1E),
+                          radius: 80,
+                          backgroundColor: Color(0xFF6034A6),
                           backgroundImage: newImage == null ? AssetImage("Assets/avatar.png") : AssetImage("$newImage")
                         ),
                       ),
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 85),
-                  child: InkWell(
-                    onTap: () => changePicOptions(context),
-                    child: Text("Change Picture",textAlign: TextAlign.center ,style: TextStyle(color: Color(0xFF0F0F1E), fontSize: 22, fontWeight: FontWeight.bold),),
-                  ),
+              ),
+              
+              Container(
+                height: 600,
+                padding: EdgeInsets.all(25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    InkWell(
+                      onTap: () => changePicOptions(context),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.edit_square, color: Color(0xFF6034A6), size: 30),
+                          Text("Change Picture", style: TextStyle(color: Color(0xFF6034A6), fontSize: 22, fontWeight: FontWeight.bold),),
+                          
+                        ],
+                      ),
+                    ),
+                    Info(title: "Username", content: widget.username, show: true,),
+                    Info(title: "Email", content: widget.email, show: true),
+                    Info(title: "Password", content: widget.password, show: false),
+                    Container(
+                      margin: EdgeInsets.only(top: 15),
+                      height: 100,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF6034A6),
+                              minimumSize: Size(375, 60),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                            ),
+                            child: Text("Save Changes", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),),
+                          ),
+                          InkWell(
+                            child: Text("Delete Account", style: TextStyle(color: Colors.red, fontSize: 22, fontWeight: FontWeight.bold),)
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.all(20),
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Info(title: "Username", content: widget.username, show: true,),
-                      Info(title: "Email", content: widget.email, show: true),
-                      Info(title: "Password", content: widget.password, show: false),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+              
+            ],
           ),
         ),
         

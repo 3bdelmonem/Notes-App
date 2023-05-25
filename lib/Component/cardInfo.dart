@@ -38,13 +38,16 @@ class _InfoState extends State<Info> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.all(10),
-      height: 125,
+      height: 100,
       alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(vertical: 10),
+      // margin: EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
           color: Color(0xFF0F0F1E),
-          borderRadius: BorderRadius.circular(15)),
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(color: Color(0xFF6034A6), offset: Offset(5, 5)),
+          ]
+        ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -68,7 +71,7 @@ class _InfoState extends State<Info> {
                   SizedBox(
                     width: 200,
                     child: widget.show == true ? 
-                      Text("${widget.content}", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700), overflow: TextOverflow.ellipsis, maxLines: 3,)
+                      Text("${widget.content}", style: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w700), overflow: TextOverflow.ellipsis, maxLines: 3,)
                       :Text("${"*"*widget.content.length}", style: TextStyle(color: Color(0xFF6034A6), fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                 ],
