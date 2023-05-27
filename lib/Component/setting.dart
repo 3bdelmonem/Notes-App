@@ -22,34 +22,27 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  File? file;
+  File? imageFile;
   late Reference  refStorage;
   ImagePicker imgpicker = ImagePicker();
   String? url;
-  String? newImage;
 
-  uploadImageFromCamera() async{
+  chooseFromCamera(var context) async{
     XFile? img = await imgpicker.pickImage(source: ImageSource.camera);
     if(img != null){
-      file = File(img.path);
-      newImage = img.path;
-      String imgName = "$widget.id";
-      refStorage = FirebaseStorage.instance.ref("Assets/$imgName");
-    }
-    else{
-      print("there is no image");
+      setState(() {
+        imageFile = File(img.path);
+      });    
+      Navigator.of(context).pop(); 
     }
   }
-  uploadImageFromGallery() async{
+  uploadFromGallery(var context) async{
     XFile? img = await imgpicker.pickImage(source: ImageSource.gallery);
     if(img != null){
-      file = File(img.path);
-      newImage = img.path;
-      String imgName = "$widget.id";
-      refStorage = FirebaseStorage.instance.ref("Assets/$imgName");
-    }
-    else{
-      print("there is no image");
+      setState(() {
+        imageFile = File(img.path);  
+      });     
+      Navigator.of(context).pop(); 
     }
   }
 
@@ -79,7 +72,7 @@ class _SettingState extends State<Setting> {
                   child: Icon(Icons.camera_alt_outlined, color: Colors.white, size: 30,),
                 ),
                 InkWell(
-                  onTap: ()=> uploadImageFromCamera(),
+                  onTap: ()=> chooseFromCamera(context),
                   child: Text("Open Camera", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                 )
               ],
@@ -99,7 +92,7 @@ class _SettingState extends State<Setting> {
                   child: Icon(Icons.photo_album_outlined, color: Colors.white, size: 30,),
                 ),
                 InkWell(
-                  onTap: ()=> uploadImageFromGallery(),
+                  onTap: ()=> uploadFromGallery(context),
                   child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                 )
               ],
@@ -161,7 +154,7 @@ class _SettingState extends State<Setting> {
                         child: CircleAvatar(
                           radius: 80,
                           backgroundColor: Color(0xFF6034A6),
-                          backgroundImage: newImage == null ? AssetImage("Assets/avatar.png") : AssetImage("$newImage")
+                          backgroundImage: imageFile == null ? AssetImage("Assets/avatar.png") : Image.file(imageFile!).image
                         ),
                       ),
                     )
