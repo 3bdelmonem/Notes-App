@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path_provider/path_provider.dart';
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
+// import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 
 class FFStorage extends StatefulWidget {
   const FFStorage({super.key});
@@ -18,13 +18,26 @@ class FFStorage extends StatefulWidget {
 
 class _FFStorageState extends State<FFStorage> {
   
-  
-  Future<File> getImageFileFromAssets(String path) async {
-    final byteData = await rootBundle.load('assets/$path');
-    final file = File('${(await getTemporaryDirectory()).path}/$path');
+ 
+  void img () async{
+    String imageName = "avatar";
+    String img = "Assets/avatar.png";
+    final Directory systemTempDir = Directory.systemTemp;
+    final byteData = await rootBundle.load(img);
+    final file = File('${systemTempDir.path}/$imageName.png');
     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-    return file;
+    Reference  refStorage = FirebaseStorage.instance.ref("Assets/id/Avatar");
+    await refStorage.putFile(file);
+    String url = await refStorage.getDownloadURL();
+    print("url = $url");
   }
+
+  // Future<File> getImageFileFromAssets(String path) async {
+  //   final byteData = await rootBundle.load('assets/$path');
+  //   final file = File('${(await getTemporaryDirectory()).path}/$path');
+  //   await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+  //   return file;
+  // }
 
   // ImagePicker imgpicker = ImagePicker();
 
@@ -42,13 +55,14 @@ class _FFStorageState extends State<FFStorage> {
   //     print("there is no image");
   //   }
   // }
-  uploadImage2() async{
-    File f = await getImageFileFromAssets('Assets/avatar.png');
-    Reference  refStorage = FirebaseStorage.instance.ref("Assets/image/avatar");
-    await refStorage.putFile(f);
-    String url = await refStorage.getDownloadURL();
-    print("url = $url");
-  }
+
+  // uploadImage2() async{
+  //   File f = await getImageFileFromAssets('Assets/avatar.png');
+  //   Reference  refStorage = FirebaseStorage.instance.ref("Assets/image/avatar");
+  //   await refStorage.putFile(f);
+  //   String url = await refStorage.getDownloadURL();
+  //   print("url = $url");
+  // }
 
 
   // getImage() async{
@@ -79,7 +93,7 @@ class _FFStorageState extends State<FFStorage> {
           children: [
           
             ElevatedButton(
-              onPressed: ()=> uploadImage2(),
+              onPressed: ()=> img(),
               child: Text("Upload Image")
             ),
             // ElevatedButton(

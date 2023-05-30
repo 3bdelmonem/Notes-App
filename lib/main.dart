@@ -10,7 +10,6 @@ import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Component/setting.dart';
 import 'package:notes/Test/uploudAndCameraImage.dart';
-
 import 'Test/firebaseStrorage.dart';
 
 late bool isActive;
@@ -43,8 +42,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: FFStorage(),
-      // home: isActive == true ? Home(id: id, username: username, email: email, password: password,) : splashScreen(),
+      // home: FFStorage(),
+      home: isActive == true ? Home(id: id, username: username, email: email, password: password,) : splashScreen(),
       debugShowCheckedModeBanner: false,
       routes: {
         "Login":(context) =>  Login(),

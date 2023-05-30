@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -46,9 +47,14 @@ class SignupAndLoginValidation {
       prefs.setString("username", username);
       prefs.setString("email", email);
       prefs.setString("password", password);
+      String imageName = "avatar";
+      String img = "Assets/avatar.png";
+      final Directory systemTempDir = Directory.systemTemp;
+      final byteData = await rootBundle.load(img);
+      final file = File('${systemTempDir.path}/$imageName.png');
+      await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
       Reference  refStorage = FirebaseStorage.instance.ref("Assets/$id/avatarImage");
-      File imageFile = File("Assets/avatar.png");
-      await refStorage.putFile(imageFile);
+      await refStorage.putFile(file);
       String url = await refStorage.getDownloadURL();
       http.Response response = await http.get(Uri.parse(url));
       if(response.statusCode == 200){
@@ -140,14 +146,12 @@ class SignupAndLoginValidation {
       await prefs.setString("username", username);
       await prefs.setString("email", email);
       await prefs.setString("password", password);
-      
       Reference  refStorage = FirebaseStorage.instance.ref("Assets/$id/avatarImage");
       String url = await refStorage.getDownloadURL();
       http.Response response = await http.get(Uri.parse(url));
       if(response.statusCode == 200){
         saveImage(response.bodyBytes);
       }
-
       await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
         id: id,
         username: username,
