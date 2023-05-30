@@ -1,4 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +20,13 @@ class SignupAndLoginValidation {
     required this.email,
     required this.password,
   });
+
+  static Future<bool> saveImage(List<int> imageBytes) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String base64Image = base64Encode(imageBytes);
+    return prefs.setString("avatar", base64Image);
+    
+  }
 
   signUpValidation(String username) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,6 +46,14 @@ class SignupAndLoginValidation {
       prefs.setString("username", username);
       prefs.setString("email", email);
       prefs.setString("password", password);
+      Reference  refStorage = FirebaseStorage.instance.ref("Assets/$id/avatarImage");
+      File imageFile = File("Assets/avatar.png");
+      await refStorage.putFile(imageFile);
+      String url = await refStorage.getDownloadURL();
+      http.Response response = await http.get(Uri.parse(url));
+      if(response.statusCode == 200){
+        saveImage(response.bodyBytes);
+      }
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
         id: id,
         username: username,
@@ -120,6 +140,14 @@ class SignupAndLoginValidation {
       await prefs.setString("username", username);
       await prefs.setString("email", email);
       await prefs.setString("password", password);
+      
+      Reference  refStorage = FirebaseStorage.instance.ref("Assets/$id/avatarImage");
+      String url = await refStorage.getDownloadURL();
+      http.Response response = await http.get(Uri.parse(url));
+      if(response.statusCode == 200){
+        saveImage(response.bodyBytes);
+      }
+
       await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
         id: id,
         username: username,
