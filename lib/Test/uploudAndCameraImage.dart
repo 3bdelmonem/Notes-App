@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class ImageTest extends StatefulWidget {
   const ImageTest({super.key});
@@ -16,15 +17,12 @@ class _ImageTestState extends State<ImageTest> {
 
   File? imageFile;
   final imagePicker = ImagePicker();
-  String? imagePath;
-  var finalImage;
 
   chooseFromCamera() async {
     var pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
       setState(() {
         imageFile = File(pickedImage.path);
-        imagePath = pickedImage.path;
       });
     }
   }
@@ -33,7 +31,6 @@ class _ImageTestState extends State<ImageTest> {
     if (pickedImage != null) {
       setState(() {
         imageFile = File(pickedImage.path);
-        imagePath = pickedImage.path;
       });
     }
   }
@@ -42,6 +39,7 @@ class _ImageTestState extends State<ImageTest> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String base64Image = base64Encode(imageBytes);
     return prefs.setString("avatar", base64Image);
+    
   }
 
   static Future<Image> getImage() async {
@@ -52,30 +50,18 @@ class _ImageTestState extends State<ImageTest> {
   }
 
   saveChanges() async{   
-    if(imagePath!= null){
+    if(imageFile != null){
       Reference  refStorage = FirebaseStorage.instance.ref("Assets/id/avatarImage");
       await refStorage.putFile(imageFile!);
-      ByteData bytes = await rootBundle.load(imagePath!);
-      saveImage(bytes.buffer.asUint8List());
+      String url = await refStorage.getDownloadURL();
+      http.Response response = await http.get(Uri.parse(url));
+      if(response.statusCode == 200){
+        saveImage(response.bodyBytes);
+      }else{
+        //TODO: Handle error
+      }
     }
   }
-
-  // onlineImageGallery() async{
-  //   XFile? img = await imagePicker.pickImage(source: ImageSource.gallery);
-  //   if(img != null){
-  //     setState(() {
-  //       imageFile = File(img.path);
-  //     });
-  //     Reference  refStorage = FirebaseStorage.instance.ref("Assets/id/avatarImage");
-  //     await refStorage.putFile(imageFile!);
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     prefs.setString("avatar", img.path.toString());
-  //     setState(() {
-  //       avatar = prefs.getString("avatar");
-  //       print("======================================${avatar}==================");
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +108,17 @@ class _ImageTestState extends State<ImageTest> {
                       margin: EdgeInsets.only(bottom: 15),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.blue, width: 3)),
-                      child: CircularProgressIndicator()
+                      child: FutureBuilder(
+                        future: getImage(),
+                        builder: (context, snapshot) {
+                          if(snapshot.hasData){
+                            return Image(image: snapshot.data!.image);
+                          }
+                          else{
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      )
                     ),
                   ],
                 ),

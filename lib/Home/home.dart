@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
       ),
-      drawer: Mydrawer(widget.username, widget.email, widget.password),
+      drawer: Mydrawer(widget.username, widget.email, widget.password, widget.id),
       floatingActionButton: FloatingActionButton(
         onPressed: (() {
           Navigator.of(context).pushNamed("AddNote");

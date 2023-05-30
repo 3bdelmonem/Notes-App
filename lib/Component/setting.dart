@@ -1,21 +1,30 @@
 import 'dart:io';
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notes/Component/cardInfo.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 class Setting extends StatefulWidget {
   late String username;
   late String email;
   late String password;
+  late String id;
   Setting({
     required this.username,
     required this.email,
     required this.password,
+    required this.id,
     super.key
   });
+
 
   @override
   State<Setting> createState() => _SettingState();
@@ -24,25 +33,52 @@ class Setting extends StatefulWidget {
 class _SettingState extends State<Setting> {
   File? imageFile;
   late Reference  refStorage;
-  ImagePicker imgpicker = ImagePicker();
-  String? url;
-
-  chooseFromCamera(var context) async{
-    XFile? img = await imgpicker.pickImage(source: ImageSource.camera);
-    if(img != null){
+  ImagePicker imagePicker = ImagePicker();
+  
+   chooseFromCamera(BuildContext context) async {
+    var pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
+    if (pickedImage != null) {
       setState(() {
-        imageFile = File(img.path);
-      });    
-      Navigator.of(context).pop(); 
+        imageFile = File(pickedImage.path);
+      });
+      Navigator.of(context).pop();
     }
   }
-  uploadFromGallery(var context) async{
-    XFile? img = await imgpicker.pickImage(source: ImageSource.gallery);
-    if(img != null){
+  chooseFromGallery(BuildContext context) async {
+    var pickedImage = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
       setState(() {
-        imageFile = File(img.path);  
-      });     
-      Navigator.of(context).pop(); 
+        imageFile = File(pickedImage.path);
+      });
+      Navigator.of(context).pop();
+    }
+  }
+  
+  static Future<bool> saveImage(List<int> imageBytes) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String base64Image = base64Encode(imageBytes);
+    return prefs.setString("avatar", base64Image);
+    
+  }
+
+  static Future<Image> getImage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? img = prefs.getString("avatar");
+    Uint8List bytes = base64Decode(img!);
+    return Image.memory(bytes);
+  }
+
+  saveChanges() async{   
+    if(imageFile != null){
+      Reference  refStorage = FirebaseStorage.instance.ref("Assets/${widget.id}/avatarImage");
+      await refStorage.putFile(imageFile!);
+      String url = await refStorage.getDownloadURL();
+      http.Response response = await http.get(Uri.parse(url));
+      if(response.statusCode == 200){
+        saveImage(response.bodyBytes);
+      }else{
+        //TODO: Handle error
+      }
     }
   }
 
@@ -92,7 +128,7 @@ class _SettingState extends State<Setting> {
                   child: Icon(Icons.photo_album_outlined, color: Colors.white, size: 30,),
                 ),
                 InkWell(
-                  onTap: ()=> uploadFromGallery(context),
+                  onTap: ()=> chooseFromGallery(context),
                   child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                 )
               ],
@@ -151,11 +187,29 @@ class _SettingState extends State<Setting> {
                       child: CircleAvatar(
                         backgroundColor: Color(0xFF0F0F1E),
                         radius: 85,
-                        child: CircleAvatar(
-                          radius: 80,
-                          backgroundColor: Color(0xFF6034A6),
-                          backgroundImage: imageFile == null ? AssetImage("Assets/avatar.png") : Image.file(imageFile!).image
-                        ),
+                        child: Container(
+                          width: 155,
+                          height: 155,
+                          clipBehavior: Clip.hardEdge,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF6034A6),
+                            borderRadius: BorderRadius.circular(360)
+                          ),
+                          child: imageFile == null?
+                          FutureBuilder(
+                            future: getImage(),
+                            builder: (context, snapshot) {
+                              if(snapshot.hasData){
+                                return Image(image: snapshot.data!.image, fit: BoxFit.cover,);
+                              }
+                              else{
+                                return CircularProgressIndicator();
+                              }
+                            },
+                          )
+                          : Image(image: FileImage(imageFile!), fit: BoxFit.cover)
+                          
+                        )
                       ),
                     )
                   ],

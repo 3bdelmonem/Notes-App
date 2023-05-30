@@ -2,11 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Component/setting.dart';
 class Mydrawer extends StatelessWidget {
-  late String myUsername, myEmail, myPassword;
-  Mydrawer(String username, String email, String password){
+  late String myUsername, myEmail, myPassword, myId;
+  Mydrawer(String username, String email, String password, String id){
     myUsername = username;
     myEmail = email;
     myPassword = password;
+    myId = id;
   }
   @override
   Widget build(BuildContext context) {
@@ -109,6 +110,7 @@ class Mydrawer extends StatelessWidget {
                     title: Text("Setting", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => Setting(
+                        id: myId,
                         username: myUsername,
                         email: myEmail,
                         password: myPassword,
