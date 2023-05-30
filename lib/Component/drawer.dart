@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Component/setting.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Mydrawer extends StatelessWidget {
   late String myUsername, myEmail, myPassword, myId;
   Mydrawer(String username, String email, String password, String id){
@@ -9,6 +13,13 @@ class Mydrawer extends StatelessWidget {
     myPassword = password;
     myId = id;
   }
+  static Future<Image> getImage() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? img = prefs.getString("avatar");
+    Uint8List bytes = base64Decode(img!);
+    return Image.memory(bytes);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -30,10 +41,25 @@ class Mydrawer extends StatelessWidget {
                   CircleAvatar(
                     backgroundColor: Color(0xFF6034A6),
                     radius: 40,
-                    child: CircleAvatar(
-                      radius: 37,
-                      backgroundColor: Color(0xFF0F0F1E),
-                      backgroundImage: AssetImage("Assets/avatar.png"),
+                    child: Container(
+                      width: 75,
+                      height: 75,
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        color: Color(0xFF0F0F1E),
+                        borderRadius: BorderRadius.circular(360)
+                      ),
+                      child: FutureBuilder(
+                        future: getImage(),
+                        builder: (context, snapshot) {
+                          if(snapshot.hasData){
+                            return Image(image: snapshot.data!.image, fit: BoxFit.cover,);
+                          }
+                          else{
+                            return CircularProgressIndicator();
+                          }
+                        },
+                      )
                     ),
                   ),
                   Padding(

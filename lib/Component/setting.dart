@@ -11,6 +11,8 @@ import 'package:notes/Component/cardInfo.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Home/home.dart';
+
 
 class Setting extends StatefulWidget {
   late String username;
@@ -208,7 +210,6 @@ class _SettingState extends State<Setting> {
                             },
                           )
                           : Image(image: FileImage(imageFile!), fit: BoxFit.cover)
-                          
                         )
                       ),
                     )
@@ -246,8 +247,14 @@ class _SettingState extends State<Setting> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ElevatedButton(
-                            onPressed: () {
-                              
+                            onPressed: () async{
+                              await saveChanges();
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Home(
+                                id: widget.id,
+                                username: widget.username,
+                                email: widget.email,
+                                password: widget.password,
+                              )));
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF6034A6),
