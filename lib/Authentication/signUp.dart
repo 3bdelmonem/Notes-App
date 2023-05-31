@@ -18,10 +18,10 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordController = new TextEditingController();
   TextEditingController confirmPasswordController = new TextEditingController();
 
-  var hiddenIcon = Icon(Icons.remove_red_eye_outlined, color: Color(0xFF6034A6), size: 22);
-  var visibleIcon = Icon(Icons.remove_red_eye, color: Colors.white, size: 22);
-  var passordIcon = Icon(Icons.remove_red_eye_outlined, color: Color(0xFF6034A6), size: 22);
-  var confirmPassordIcon = Icon(Icons.remove_red_eye_outlined, color: Color(0xFF6034A6), size: 22);
+  var hiddenIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
+  var visibleIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22);
+  var passordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
+  var confirmPassordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
 
   
   @override
