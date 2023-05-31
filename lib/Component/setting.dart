@@ -1,19 +1,16 @@
 import 'dart:io';
 import 'dart:convert';
-import 'dart:math';
 import 'dart:typed_data';
-import 'package:path/path.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notes/Component/cardInfo.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Home/home.dart';
 
 
+// ignore: must_be_immutable
 class Setting extends StatefulWidget {
   late String username;
   late String email;
@@ -26,8 +23,6 @@ class Setting extends StatefulWidget {
     required this.id,
     super.key
   });
-
-
   @override
   State<Setting> createState() => _SettingState();
 }
@@ -37,7 +32,7 @@ class _SettingState extends State<Setting> {
   late Reference  refStorage;
   ImagePicker imagePicker = ImagePicker();
   
-   chooseFromCamera(BuildContext context) async {
+  chooseFromCamera(BuildContext context) async {
     var pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
       setState(() {

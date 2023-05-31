@@ -8,9 +8,6 @@ import 'package:notes/Home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Component/setting.dart';
-import 'package:notes/Test/uploudAndCameraImage.dart';
-import 'Test/firebaseStrorage.dart';
 
 late bool isActive;
 late String id;

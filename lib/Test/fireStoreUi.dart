@@ -30,7 +30,7 @@ class _FireStoreUiState extends State<FireStoreUi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: listData == null || listData.isEmpty ? CircularProgressIndicator() : ListView.builder(
+      body: listData == listData.isEmpty ? CircularProgressIndicator() : ListView.builder(
         itemCount: listData.length,
         itemBuilder: (context, index) {
           return ListTile(
