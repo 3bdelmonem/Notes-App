@@ -8,15 +8,22 @@ class HelpScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFF0F0F1E),
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Color(0xFF6034A6),
         foregroundColor: Colors.white,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+        leadingWidth: 150,
+        leading: InkWell(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+              ),
+              Text("Help", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
+            ],
           ),
         ),
       ),

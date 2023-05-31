@@ -72,7 +72,7 @@ class _InfoState extends State<Info> {
                   SizedBox(
                     width: 200,
                     child: widget.show == true ? 
-                      Text("${widget.content}", style: TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.w700), overflow: TextOverflow.ellipsis, maxLines: 3,)
+                      Text("${widget.content}", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis, maxLines: 3,)
                       :Text("${"*"*widget.content.length}", style: TextStyle(color: Color(0xFF6034A6), fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
                 ],
