@@ -11,7 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Home/home.dart';
 
-
 // ignore: must_be_immutable
 class Setting extends StatefulWidget {
   late String username;
@@ -62,7 +61,7 @@ class _SettingState extends State<Setting> {
     }).catchError((e){
       print("Error = $e");
     });
-
+    
     Navigator.of(context).pushReplacementNamed("SplashScreen");
   }
   
