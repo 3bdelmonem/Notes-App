@@ -200,8 +200,7 @@ class _passwordAuthState extends State<passwordAuth> {
           ElevatedButton(
             onPressed: () async {
               try {
-                final credential = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: "abdelomonemranea2000@gmail.com",
                   password: "1234567Cr7",
                 );
