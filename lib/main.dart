@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Authentication/login.dart';
 import 'package:notes/Authentication/signUp.dart';
@@ -15,9 +16,16 @@ late String username;
 late String email;
 late String password;
 
+Future bgMassage(RemoteMessage message) async{
+  print("${message.notification!.body}");
+}
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  FirebaseMessaging.onBackgroundMessage(bgMassage);
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   var activeUser = FirebaseAuth.instance.currentUser;

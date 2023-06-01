@@ -45,12 +45,13 @@ dependencies:
   firebase_auth: ^4.2.2
   cloud_firestore: ^4.5.0
   cloud_functions: ^4.1.0
-  firebase_messaging: ^14.4.0
+  firebase_messaging: ^14.6.2
   firebase_storage: ^11.1.0
   google_sign_in: ^6.0.2
   awesome_dialog: ^3.0.2
   flutter_phone_direct_caller: ^2.1.1
   path_provider: ^2.0.15
+  firebase_analytics: ^10.4.2
   
 
 dev_dependencies:

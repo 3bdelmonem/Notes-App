@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Crud/editNote.dart';
 import 'package:notes/Component/drawer.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class Home extends StatefulWidget {
   final String id;
@@ -23,13 +24,34 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {  
   late CollectionReference notes = FirebaseFirestore.instance.collection("notes").doc(widget.id).collection("userNotes");
+
+  FirebaseMessaging fbm = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    fbm.getToken().then((token) {
+      print(token);
+    },);
+    
+    
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      Navigator.of(context).pushNamed("AddNote");
+    });
+
+    FirebaseMessaging.onMessage.listen((event) {
+      print("${event.notification!.body}");
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF6034A6),
         foregroundColor: Colors.white,
-        title: Text(widget.username),
+        title: Text(widget.username, style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
         centerTitle: true,
         actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
       ),
