@@ -25,22 +25,33 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {  
   late CollectionReference notes = FirebaseFirestore.instance.collection("notes").doc(widget.id).collection("userNotes");
 
-  FirebaseMessaging fbm = FirebaseMessaging.instance;
+  void setupPushNotification() async{
+    FirebaseMessaging fcm = FirebaseMessaging.instance;
+    await fcm.requestPermission(
+
+    );
+    final token = await fcm.getToken();
+    print("================================");
+    print(token);
+  }
 
   @override
   void initState() {
-    fbm.getToken().then((token) {
-      print(token);
-    },);
-    
-    
+
+  setupPushNotification();
+
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      Navigator.of(context).pushNamed("AddNote");
+      print("=========================================");
+      print("${event.notification!.body}");
+      print("=========================================");
+      // Navigator.of(context).pushNamed("AddNote");
     });
 
-    FirebaseMessaging.onMessage.listen((event) {
-      print("${event.notification!.body}");
-    });
+    // FirebaseMessaging.onMessage.listen((event) {
+    //   print("=========================================");
+    //   print("${event.notification!.body}");
+    //   print("=========================================");
+    // });
 
     super.initState();
   }

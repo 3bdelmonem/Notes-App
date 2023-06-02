@@ -52,6 +52,7 @@ dependencies:
   flutter_phone_direct_caller: ^2.1.1
   path_provider: ^2.0.15
   firebase_analytics: ^10.4.2
+  flutter_local_notifications: ^14.1.1
   
 
 dev_dependencies:
