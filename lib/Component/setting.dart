@@ -1,19 +1,17 @@
 import 'dart:io';
 import 'dart:convert';
-import 'dart:math';
 import 'dart:typed_data';
-import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notes/Component/cardInfo.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../Home/home.dart';
 
-
+// ignore: must_be_immutable
 class Setting extends StatefulWidget {
   late String username;
   late String email;
@@ -26,8 +24,6 @@ class Setting extends StatefulWidget {
     required this.id,
     super.key
   });
-
-
   @override
   State<Setting> createState() => _SettingState();
 }
@@ -36,8 +32,40 @@ class _SettingState extends State<Setting> {
   File? imageFile;
   late Reference  refStorage;
   ImagePicker imagePicker = ImagePicker();
+
+  deleteUAccount() async {
+    CollectionReference delAccountData = await FirebaseFirestore.instance.collection("users");
+    await delAccountData.doc("$widget.id").delete().then((value) {
+      print("Delete users Info Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+    
+    CollectionReference delAccountNotes = await FirebaseFirestore.instance.collection("notes");
+    await delAccountNotes.doc("$widget.id").delete().then((value) {
+      print("Delete Notes Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+
+    Reference delImage = FirebaseStorage.instance.ref("Assets/$widget.id");
+    await delImage.delete().then((value) {
+      print("Delete Image Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+
+    var delAccount = FirebaseAuth.instance.currentUser;
+    await delAccount!.delete().then((value) {
+      print("Delete Account Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+    
+    Navigator.of(context).pushReplacementNamed("SplashScreen");
+  }
   
-   chooseFromCamera(BuildContext context) async {
+  chooseFromCamera(BuildContext context) async {
     var pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
     if (pickedImage != null) {
       setState(() {
@@ -264,6 +292,7 @@ class _SettingState extends State<Setting> {
                             child: Text("Save Changes", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),),
                           ),
                           InkWell(
+                            onTap: () => deleteUAccount(),
                             child: Text("Delete Account", style: TextStyle(color: Colors.red, fontSize: 22, fontWeight: FontWeight.bold),)
                           )
                         ],

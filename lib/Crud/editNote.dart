@@ -1,7 +1,5 @@
-import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditNote extends StatefulWidget{
@@ -49,42 +47,42 @@ class _EditNoteState extends State<EditNote>{
           backgroundColor: Color(0xFF6034A6),
           foregroundColor: Colors.white,
           leadingWidth: 150,
-          leading: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 15),
-                child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
-              ),
-              TextButton(
-                onPressed: () async{
-                  if(titleController.text != "" || contentController.text != ""){
-                    CollectionReference noteUpdate = await FirebaseFirestore.instance.collection("notes").doc(id).collection("userNotes");
-                    noteUpdate.doc(widget.noteId).update({
-                      "title" : titleController.text,
-                      "content" : contentController.text,
-                    }).then((value) {
-                      print("Updated Successfully");
-                    }).catchError((e){
-                      print("Error = $e");
-                    });
-                    Navigator.of(context).pop();
-                  }
-                  else if(titleController.text == "" && contentController.text == ""){
-                    CollectionReference noteUpdate = await FirebaseFirestore.instance.collection("notes").doc(id).collection("userNotes");
-                    noteUpdate.doc(widget.noteId).delete().then((value) {
-                      print("Deleted Successfully");
-                    }).catchError((e){
-                      print("Error = $e");
-                    });
-                    Navigator.of(context).pop();
-                  }
-                  else{
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: Text("Notes", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
-              )
-            ],
+          leading: InkWell(
+            onTap: () async{
+              if(titleController.text != "" || contentController.text != ""){
+                CollectionReference noteUpdate = await FirebaseFirestore.instance.collection("notes").doc(id).collection("userNotes");
+                noteUpdate.doc(widget.noteId).update({
+                  "title" : titleController.text,
+                  "content" : contentController.text,
+                }).then((value) {
+                  print("Updated Successfully");
+                }).catchError((e){
+                  print("Error = $e");
+                });
+                Navigator.of(context).pop();
+              }
+              else if(titleController.text == "" && contentController.text == ""){
+                CollectionReference noteUpdate = await FirebaseFirestore.instance.collection("notes").doc(id).collection("userNotes");
+                noteUpdate.doc(widget.noteId).delete().then((value) {
+                  print("Deleted Successfully");
+                }).catchError((e){
+                  print("Error = $e");
+                });
+                Navigator.of(context).pop();
+              }
+              else{
+                Navigator.of(context).pop();
+              }
+            },
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+                ),
+                Text("Notes", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
+              ],
+            ),
           ),
           actions: [
             MediaQuery.of(context).viewInsets.bottom != 0 ?

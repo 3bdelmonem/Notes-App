@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:notes/main.dart';
 
 class passwordAuth extends StatefulWidget {
   const passwordAuth({super.key});
@@ -125,13 +127,45 @@ class _passwordAuthState extends State<passwordAuth> {
     );
   }
 
-  deleteUser () async {
+  deleteUser() async {
     CollectionReference updateUserData = await FirebaseFirestore.instance.collection("users");
     updateUserData.doc("123456789").delete().then((value) {
       print("Deleted Successful");
     }).catchError((e){
       print("Error = $e");
     });
+  }
+
+  deleteUAccount() async {
+    CollectionReference delAccountData = await FirebaseFirestore.instance.collection("users");
+    await delAccountData.doc("$id").delete().then((value) {
+      print("Delete users Info Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+    
+    CollectionReference delAccountNotes = await FirebaseFirestore.instance.collection("notes");
+    await delAccountNotes.doc("$id").delete().then((value) {
+      print("Delete Notes Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+
+    Reference delImage = FirebaseStorage.instance.ref("Assets/$id");
+    await delImage.delete().then((value) {
+      print("Delete Image Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+
+    var delAccount = FirebaseAuth.instance.currentUser;
+    await delAccount!.delete().then((value) {
+      print("Delete Account Successfully");
+    }).catchError((e){
+      print("Error = $e");
+    });
+
+    Navigator.of(context).pushReplacementNamed("SplashScreen");
   }
 
   trans() async{
@@ -166,8 +200,7 @@ class _passwordAuthState extends State<passwordAuth> {
           ElevatedButton(
             onPressed: () async {
               try {
-                final credential = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: "abdelomonemranea2000@gmail.com",
                   password: "1234567Cr7",
                 );
