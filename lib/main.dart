@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notes/Authentication/login.dart';
 import 'package:notes/Authentication/signUp.dart';
 import 'package:notes/Component/help.dart';
@@ -22,6 +23,7 @@ late String password;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FlutterLocalNotificationsPlugin();
   NotificationService.instance!.initNotificationService();
   String? nooo = await NotificationService.instance!.getToken();
   log(nooo.toString());

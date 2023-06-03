@@ -6,6 +6,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'mode.dart';
+
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
   'high_importance_channel', // id
   'High Importance Notifications', // title
@@ -95,7 +97,7 @@ class NotificationService {
     debugPrint("init local notifications");
     _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
     var androidSettings = const AndroidInitializationSettings(
-      '@mipmap/ic_launcher',
+      'logo',
     );
     var iosSettings = const DarwinInitializationSettings(
       requestAlertPermission: true,
@@ -108,6 +110,8 @@ class NotificationService {
       settings,
       onDidReceiveNotificationResponse: (payload) async {
         debugPrint("onDidReceiveBackgroundNotificationResponse pressed");
+        var payloadMap = pushnotificationModelFromJson(payload.payload!);
+        log(payloadMap.toString());
       },
     );
 
@@ -130,37 +134,25 @@ class NotificationService {
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         final payloadMap = jsonDecode(json.encode(message.data));
         log(payloadMap.toString());
-        PushNotification notification = PushNotification(
-          title: message.notification!.title,
-          body: message.notification!.body,
-          destinationId: message.data["destination_id"] ?? "",
-          destinationName: message.data["destination"] ?? "",
-          read: message.data["read"] ?? "",
-          name: message.data["name"],
-          // profilePath: message.data["destination"] != "Chat"
-          //     ? ""
-          //     : message.data["profile_photo_path"],
-        );
       });
       debugPrint('User granted permission');
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
         log(message.data.toString());
 
+        PushNotificationModel notificationModel = PushNotificationModel(
+          body: message.notification!.body,
+          title: message.notification!.title,
+        );
+        String notificationtring =
+            pushnotificationModelToJson(notificationModel);
         // NotificationModel.fromJson(payloadMap);
         PushNotification notification = PushNotification(
           title: message.notification!.title,
           body: message.notification!.body,
-          destinationId: message.data["destination_id"] ?? "",
-          destinationName: message.data["destination"] ?? "",
-          read: message.data["read"] ?? "",
-          createdAt: message.data["created_at"] ?? "",
-          name: message.data["name"],
-          // profilePath: message.data["destination"] != "Chat"
-          //     ? ""
-          //     : message.data["profile_photo_path"],
         );
         // if (notification != null) {
-
+        await showLocalNotification(
+            notification.title!, notification.body!, notificationtring);
         // }
       });
     } else {
@@ -177,24 +169,11 @@ class NotificationService {
       PushNotification notification = PushNotification(
         title: initialMessage.notification!.title,
         body: initialMessage.notification!.body,
-        destinationId: initialMessage.data["destination_id"] ?? "",
-        destinationName: initialMessage.data["destination"] ?? "",
-        read: initialMessage.data["read"] ?? "",
-        name: initialMessage.data["name"] ?? "",
-        // profilePath: initialMessage.data == null
-        //     ? ""
-        //     : initialMessage.data["profile_photo_path"],
       );
 
       debugPrint(notification.body.toString());
     }
   }
-
-  // Future<Option<Failure>> deleteToken() async {
-  //   final result = await _messaging.deleteInstanceID();
-  //   if (!result) return some(Failure("server-error"));
-  //   return none();
-  // }
 
   Future<void> showLocalNotification(
       String title, String body, String payload) async {
