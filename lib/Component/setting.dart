@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notes/Component/cardInfo.dart';
 import 'package:http/http.dart' as http;
+import 'package:notes/Component/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Home/home.dart';
 
@@ -100,6 +101,7 @@ class _SettingState extends State<Setting> {
 
   saveChanges() async{   
     if(imageFile != null){
+      showLoading(context);
       Reference  refStorage = FirebaseStorage.instance.ref("Assets/${widget.id}/avatarImage");
       await refStorage.putFile(imageFile!);
       String url = await refStorage.getDownloadURL();
