@@ -93,7 +93,7 @@ class _AddNoteState extends State<AddNote>{
                   children: [
                     TextFormField(
                       controller: titleController,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.multiline,
                       maxLength: 65,
                       maxLines: null,
                       cursorColor: Color(0xFF6034A6),
@@ -115,7 +115,7 @@ class _AddNoteState extends State<AddNote>{
                     ),
                     TextFormField(
                       controller: contentController,
-                      keyboardType: TextInputType.text,
+                      keyboardType: TextInputType.multiline,
                       minLines: 18,
                       maxLines: null,
                       cursorColor: Color(0xFF6034A6),
