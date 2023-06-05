@@ -108,7 +108,7 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   onTap: ()=> chooseFromCamera(context),
-                  child: Text("Open Camera", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+                  child: Text("Open Camera", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
                 )
               ],
             ),
@@ -128,7 +128,7 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   onTap: ()=> chooseFromGallery(context),
-                  child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+                  child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
                 )
               ],
             )

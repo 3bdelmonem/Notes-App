@@ -88,7 +88,7 @@ class _LoginState extends State<Login>{
                       cursorColor: Color(0xFF6034A6),
                       controller: passwordController,
                       obscureText: seePassword,
-                      style: TextStyle(color: Colors.white),
+                      style: seePassword == false ? TextStyle(color: Colors.white) : TextStyle(color: Color(0xFF6034A6)),
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                           onPressed: () {
