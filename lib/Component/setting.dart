@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:notes/Component/cardInfo.dart';
 import 'package:http/http.dart' as http;
+import 'package:notes/Component/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Home/home.dart';
+import 'deleteAccount.dart';
 
 // ignore: must_be_immutable
 class Setting extends StatefulWidget {
@@ -32,38 +32,6 @@ class _SettingState extends State<Setting> {
   File? imageFile;
   late Reference  refStorage;
   ImagePicker imagePicker = ImagePicker();
-
-  deleteUAccount() async {
-    CollectionReference delAccountData = await FirebaseFirestore.instance.collection("users");
-    await delAccountData.doc("$widget.id").delete().then((value) {
-      print("Delete users Info Successfully");
-    }).catchError((e){
-      print("Error = $e");
-    });
-    
-    CollectionReference delAccountNotes = await FirebaseFirestore.instance.collection("notes");
-    await delAccountNotes.doc("$widget.id").delete().then((value) {
-      print("Delete Notes Successfully");
-    }).catchError((e){
-      print("Error = $e");
-    });
-
-    Reference delImage = FirebaseStorage.instance.ref("Assets/$widget.id");
-    await delImage.delete().then((value) {
-      print("Delete Image Successfully");
-    }).catchError((e){
-      print("Error = $e");
-    });
-
-    var delAccount = FirebaseAuth.instance.currentUser;
-    await delAccount!.delete().then((value) {
-      print("Delete Account Successfully");
-    }).catchError((e){
-      print("Error = $e");
-    });
-    
-    Navigator.of(context).pushReplacementNamed("SplashScreen");
-  }
   
   chooseFromCamera(BuildContext context) async {
     var pickedImage = await imagePicker.pickImage(source: ImageSource.camera);
@@ -100,6 +68,7 @@ class _SettingState extends State<Setting> {
 
   saveChanges() async{   
     if(imageFile != null){
+      showLoading(context);
       Reference  refStorage = FirebaseStorage.instance.ref("Assets/${widget.id}/avatarImage");
       await refStorage.putFile(imageFile!);
       String url = await refStorage.getDownloadURL();
@@ -139,7 +108,7 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   onTap: ()=> chooseFromCamera(context),
-                  child: Text("Open Camera", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+                  child: Text("Open Camera", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
                 )
               ],
             ),
@@ -159,7 +128,7 @@ class _SettingState extends State<Setting> {
                 ),
                 InkWell(
                   onTap: ()=> chooseFromGallery(context),
-                  child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+                  child: Text("Choose From Gallery", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
                 )
               ],
             )
@@ -233,7 +202,7 @@ class _SettingState extends State<Setting> {
                                 return Image(image: snapshot.data!.image, fit: BoxFit.cover,);
                               }
                               else{
-                                return CircularProgressIndicator();
+                                return Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6,));
                               }
                             },
                           )
@@ -292,7 +261,7 @@ class _SettingState extends State<Setting> {
                             child: Text("Save Changes", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),),
                           ),
                           InkWell(
-                            onTap: () => deleteUAccount(),
+                            onTap: () => delAccount(context, widget.id, widget.email, widget.password),
                             child: Text("Delete Account", style: TextStyle(color: Colors.red, fontSize: 22, fontWeight: FontWeight.bold),)
                           )
                         ],

@@ -1,26 +1,17 @@
-import 'dart:convert';
-import 'dart:typed_data';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/Component/loading.dart';
 import 'package:notes/Component/setting.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:notes/Component/showAvatar.dart';
 // ignore: must_be_immutable
 class Mydrawer extends StatelessWidget {
   late String myUsername, myEmail, myPassword, myId;
-  Mydrawer(String username, String email, String password, String id){
+  Mydrawer(String username, String email, String password, String id) {
     myUsername = username;
     myEmail = email;
     myPassword = password;
     myId = id;
   }
-  static Future<Image> getImage() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? img = prefs.getString("avatar");
-    Uint8List bytes = base64Decode(img!);
-    return Image.memory(bytes);
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -39,30 +30,7 @@ class Mydrawer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Color(0xFF6034A6),
-                    radius: 40,
-                    child: Container(
-                      width: 75,
-                      height: 75,
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF0F0F1E),
-                        borderRadius: BorderRadius.circular(360)
-                      ),
-                      child: FutureBuilder(
-                        future: getImage(),
-                        builder: (context, snapshot) {
-                          if(snapshot.hasData){
-                            return Image(image: snapshot.data!.image, fit: BoxFit.cover,);
-                          }
-                          else{
-                            return CircularProgressIndicator();
-                          }
-                        },
-                      )
-                    ),
-                  ),
+                  ShowAvatar(),
                   Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: Column(
@@ -195,16 +163,17 @@ class Mydrawer extends StatelessWidget {
                             actions: [
                               ElevatedButton(
                                 onPressed: () async{
+                                  showLoading(context);
                                   await FirebaseAuth.instance.signOut();
                                   Navigator.of(context).pushReplacementNamed("SplashScreen");
                                 },
                                 child: Text("Yes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
                                 style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(135, 40),
-                                          backgroundColor: Colors.red,
-                                          foregroundColor: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(60))),
+                                  minimumSize: Size(135, 40),
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(60))),
                               ),
                               ElevatedButton(
                                 onPressed: () {

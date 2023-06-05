@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:notes/Component/loading.dart';
 import 'package:notes/Home/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +31,7 @@ class SignupAndLoginValidation {
   signUpValidation(String username) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
+      showLoading(context);
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -67,6 +69,7 @@ class SignupAndLoginValidation {
       return credential;
     }
     on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       }
@@ -129,6 +132,7 @@ class SignupAndLoginValidation {
     late String username;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
+      showLoading(context);
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password
@@ -159,6 +163,7 @@ class SignupAndLoginValidation {
       return credential;
     } 
     on FirebaseAuthException catch (e) {
+      Navigator.of(context).pop();
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
         showDialog(
