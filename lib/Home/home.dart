@@ -23,10 +23,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late CollectionReference notes = FirebaseFirestore.instance
-      .collection("notes")
-      .doc(widget.id)
-      .collection("userNotes");
+  late CollectionReference notes = FirebaseFirestore.instance.collection("notes").doc(widget.id).collection("userNotes");
 
   void setupPushNotification() async {
     FirebaseMessaging fcm = FirebaseMessaging.instance;
@@ -60,29 +57,29 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: Icon(Icons.menu, size: 30),
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
+          }
+        ),
         backgroundColor: Color(0xFF6034A6),
         foregroundColor: Colors.white,
-        title: Text(widget.username,
-            style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w700,
-                color: Colors.white)),
+        title: Text(widget.username, style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
         centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context).pushNamed("AddNote"), 
+            icon: Icon(Icons.add, size: 30)
+          )
+        ],
       ),
-      drawer:
-          Mydrawer(widget.username, widget.email, widget.password, widget.id),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (() {
-          Navigator.of(context).pushNamed("AddNote");
-        }),
-        backgroundColor: Color(0xFF6034A6),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 35,
-        ),
-      ),
+
+      drawer:Mydrawer(widget.username, widget.email, widget.password, widget.id),
+      
       body: Container(
           alignment: Alignment.center,
           padding: EdgeInsets.all(20),
@@ -97,10 +94,7 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) {
                     return Dismissible(
                       onDismissed: (direction) {
-                        notes
-                            .doc(snapshot.data!.docs[index]["noteId"])
-                            .delete()
-                            .then((value) {
+                        notes.doc(snapshot.data!.docs[index]["noteId"]).delete().then((value) {
                           print("Deleted Successful");
                         }).catchError((e) {
                           print("Error = $e");
@@ -122,8 +116,9 @@ class _HomeState extends State<Home> {
                         margin: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                             gradient: RadialGradient(
-                              colors: [Color(0xFF6034A6), Color(0xFF4833A6)],
+                              colors: [Color(0xFF4833A6), Color(0xFF6034A6)],
                               radius: 2.5,
+                              focalRadius: 25
                             ),
                             borderRadius: BorderRadius.circular(15)),
                         child: ListTile(
@@ -164,7 +159,7 @@ class _HomeState extends State<Home> {
                 );
               }
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6));
               }
               if (snapshot.hasError) {
                 return Center(

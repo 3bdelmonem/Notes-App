@@ -14,10 +14,11 @@ class ShowAvatar extends StatelessWidget {
     return InkWell(
       onTap: () {
         showDialog(
-          barrierColor: Color(0xFF0F0F1E).withOpacity(0.9),
+          barrierColor: Colors.black.withOpacity(0.75),
           context: context,
           builder: (context) {
             return Dialog(
+              backgroundColor: Color(0xFF0F0F1E),
               insetPadding: EdgeInsets.zero,
               child: Container(
                 width: double.infinity,
@@ -28,7 +29,7 @@ class ShowAvatar extends StatelessWidget {
                       return Image(image: snapshot.data!.image, fit: BoxFit.cover);
                     }
                     else{
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6,));
                     }
                   },
                 )

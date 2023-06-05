@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 showLoading(BuildContext context) {
      showDialog(
       barrierDismissible: false,
-      barrierColor: Color(0xFF0F0F1E).withOpacity(0.9),
+      barrierColor: Colors.black.withOpacity(0.75),
       context: context,
       builder: (context) {
         return Dialog(

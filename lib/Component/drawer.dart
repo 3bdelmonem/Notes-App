@@ -6,12 +6,12 @@ import 'package:notes/Component/showAvatar.dart';
 // ignore: must_be_immutable
 class Mydrawer extends StatelessWidget {
   late String myUsername, myEmail, myPassword, myId;
-  Mydrawer(String username, String email, String password, String id){
+  Mydrawer(String username, String email, String password, String id) {
     myUsername = username;
     myEmail = email;
     myPassword = password;
     myId = id;
-  }  
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
