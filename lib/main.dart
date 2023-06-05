@@ -10,8 +10,6 @@ import 'package:notes/Crud/addNote.dart';
 import 'package:notes/Home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
-import 'package:notes/Component/showAvatar.dart';
-import 'package:notes/Component/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Home/notification_service.dart';
