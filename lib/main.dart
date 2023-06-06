@@ -1,8 +1,6 @@
-import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notes/Authentication/login.dart';
 import 'package:notes/Authentication/signUp.dart';
 import 'package:notes/Component/help.dart';
@@ -11,7 +9,6 @@ import 'package:notes/Home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Home/notification_service.dart';
 
 late bool isActive;
 late String id;

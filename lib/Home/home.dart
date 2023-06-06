@@ -6,6 +6,8 @@ import 'package:notes/Crud/editNote.dart';
 import 'package:notes/Component/drawer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:elegant_notification/elegant_notification.dart';
+import 'package:notes/component/notifications.dart';
+import '../Component/notifications.dart';
 
 class Home extends StatefulWidget {
   final String id;
@@ -25,49 +27,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late CollectionReference notes = FirebaseFirestore.instance.collection("notes").doc(widget.id).collection("userNotes");
 
-  fcm() async{
-    FirebaseMessaging fcm = FirebaseMessaging.instance;
-    NotificationSettings settings = await fcm.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    fcm.getToken().then((value) {
-      log(value.toString());
-    },);
-    log('User granted permission: ${settings.authorizationStatus}');
-  }
-  
-  onScreen() {
-    FirebaseMessaging.onMessage.listen((event) { 
-      ElegantNotification(
-        title:  Text("${event.notification!.title}", style: TextStyle(color: Color(0xFF6034A6), fontWeight: FontWeight.bold, fontSize: 22)),
-        description:  Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 12),),
-        icon: Image(
-          image: AssetImage("Assets/notesNotification.png"),
-          fit: BoxFit.contain,
-        ),
-        progressIndicatorColor: Color(0xFF6034A6),
-        animation: AnimationType.fromTop,
-        animationDuration: Duration(seconds: 2),
-        showProgressIndicator: false,
-        background:  Colors.white,
-        radius: 20,
-        width: double.infinity,
-        height: 100,
-      ).show(context);
-      log(event.notification!.body.toString());
-    });
-  }
+  ShowNotificatons showNotificatons = new ShowNotificatons();
 
   @override
   void initState() {
-    fcm();
-    onScreen();
+    showNotificatons.fcm();
+    showNotificatons.onScreen(context, widget.username);
     super.initState();
   }
 
