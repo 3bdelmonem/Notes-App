@@ -46,17 +46,19 @@ class _HomeState extends State<Home> {
     FirebaseMessaging.onMessage.listen((event) { 
       ElegantNotification(
         title:  Text("${event.notification!.title}", style: TextStyle(color: Color(0xFF6034A6), fontWeight: FontWeight.bold, fontSize: 22)),
-        description:  Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 120),),
+        description:  Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 12),),
         icon: Image(
           image: AssetImage("Assets/notesNotification.png"),
           fit: BoxFit.contain,
         ),
         progressIndicatorColor: Color(0xFF6034A6),
         animation: AnimationType.fromTop,
+        animationDuration: Duration(seconds: 2),
         showProgressIndicator: false,
-        background:  Colors.grey.shade800,
+        background:  Colors.white,
         radius: 20,
         width: double.infinity,
+        height: 100,
       ).show(context);
       log(event.notification!.body.toString());
     });
