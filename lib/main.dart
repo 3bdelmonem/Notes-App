@@ -1,6 +1,6 @@
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notes/Authentication/login.dart';
@@ -11,7 +11,6 @@ import 'package:notes/Home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Home/notification_service.dart';
 
 late bool isActive;
@@ -20,13 +19,16 @@ late String username;
 late String email;
 late String password;
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print("Handling a background message: ${message.messageId}");
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FlutterLocalNotificationsPlugin();
-  NotificationService.instance!.initNotificationService();
-  String? nooo = await NotificationService.instance!.getToken();
-  log(nooo.toString());
+  
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
   var activeUser = FirebaseAuth.instance.currentUser;

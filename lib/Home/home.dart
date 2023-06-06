@@ -1,10 +1,11 @@
 import 'dart:developer';
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Crud/editNote.dart';
 import 'package:notes/Component/drawer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:elegant_notification/elegant_notification.dart';
 
 class Home extends StatefulWidget {
   final String id;
@@ -24,29 +25,47 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late CollectionReference notes = FirebaseFirestore.instance.collection("notes").doc(widget.id).collection("userNotes");
 
-  void setupPushNotification() async {
+  fcm() async{
     FirebaseMessaging fcm = FirebaseMessaging.instance;
-    await fcm.requestPermission();
-    final token = await fcm.getToken();
-    log("================================");
-    log(token.toString());
+    NotificationSettings settings = await fcm.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    fcm.getToken().then((value) {
+      log(value.toString());
+    },);
+    log('User granted permission: ${settings.authorizationStatus}');
+  }
+  
+  onScreen() {
+    FirebaseMessaging.onMessage.listen((event) { 
+      ElegantNotification(
+        title:  Text("${event.notification!.title}", style: TextStyle(color: Color(0xFF6034A6), fontWeight: FontWeight.bold, fontSize: 22)),
+        description:  Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 12),),
+        icon: Image(
+          image: AssetImage("Assets/notesNotification.png"),
+          fit: BoxFit.contain,
+        ),
+        progressIndicatorColor: Color(0xFF6034A6),
+        animation: AnimationType.fromTop,
+        showProgressIndicator: false,
+        background:  Colors.grey.shade800,
+        radius: 20,
+        width: double.infinity,
+      ).show(context);
+      log(event.notification!.body.toString());
+    });
   }
 
   @override
   void initState() {
-    setupPushNotification();
-
-    FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      print("=========================================");
-      log("${event.notification!.body}");
-      print("=========================================");
-      // Navigator.of(context).pushNamed("AddNote");
-    });
-    // FirebaseMessaging.onMessage.listen((event) {
-    //   print("=========================================");
-    //   print("${event.notification!.body}");
-    //   print("=========================================");
-    // });
+    fcm();
+    onScreen();
     super.initState();
   }
 

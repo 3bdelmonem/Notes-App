@@ -53,6 +53,7 @@ dependencies:
   firebase_analytics: ^10.4.2
   flutter_local_notifications: ^14.1.1
   google_sign_in: ^6.1.3
+  elegant_notification: ^1.10.0
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +88,7 @@ flutter:
     - Assets/notesLogo.png
     - Assets/notesIcon.png
     - Assets/avatar.png
+    - Assets/notesNotification.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
