@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
     FirebaseMessaging.onMessage.listen((event) { 
       ElegantNotification(
         title:  Text("${event.notification!.title}", style: TextStyle(color: Color(0xFF6034A6), fontWeight: FontWeight.bold, fontSize: 22)),
-        description:  Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 12),),
+        description:  Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 120),),
         icon: Image(
           image: AssetImage("Assets/notesNotification.png"),
           fit: BoxFit.contain,
