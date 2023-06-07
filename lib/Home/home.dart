@@ -31,9 +31,10 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     nf.fcm();
-    nf.onScreen(context, widget.username);
+    nf.onScreen(context);
     nf.clickOnBackgroundAppNotification(context);
     nf.initialMessage(context);
+    // nf.sendNotification("I Love You ${widget.username} 😘❤️", "NOTES", "${widget.id}");
     super.initState();
   }
 
