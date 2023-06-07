@@ -9,6 +9,7 @@ import 'package:notes/Home/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer';
 
 late bool isActive;
 late String id;
@@ -17,7 +18,7 @@ late String email;
 late String password;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("Handling a background message: ${message.messageId}");
+  log("Handling a background message: ${message.notification!.body}");
 }
 
 void main() async {

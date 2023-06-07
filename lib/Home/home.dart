@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
+import 'package:notes/Component/customNotification.dart';
 import 'package:notes/Crud/editNote.dart';
 import 'package:notes/Component/drawer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -25,48 +26,14 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   late CollectionReference notes = FirebaseFirestore.instance.collection("notes").doc(widget.id).collection("userNotes");
 
-  fcm() async{
-    FirebaseMessaging fcm = FirebaseMessaging.instance;
-    NotificationSettings settings = await fcm.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-    fcm.getToken().then((value) {
-      log(value.toString());
-    },);
-    log('User granted permission: ${settings.authorizationStatus}');
-  }
-  onScreen() {
-    FirebaseMessaging.onMessage.listen((event) { 
-      ElegantNotification(
-        title:  Text("NOTES", style: TextStyle(color: Color(0xFF6034A6), fontWeight: FontWeight.bold, fontSize: 22)),
-        description:  Text("I Love You ${widget.username} 😘❤️", style: TextStyle(color: Colors.white, fontSize: 16),),
-        icon: Image(
-          image: AssetImage("Assets/notesNotification.png"),
-          fit: BoxFit.contain,
-        ),
-        progressIndicatorColor: Color(0xFF6034A6),
-        animation: AnimationType.fromTop,
-        animationDuration: Duration(seconds: 3),
-        showProgressIndicator: false,
-        background:  Colors.grey.shade800,
-        radius: 20,
-        width: double.infinity,
-        height: 100,
-      ).show(context);
-      log(event.notification!.body.toString());
-    });
-  }
+  NotesNotification nf = NotesNotification();
 
   @override
   void initState() {
-    fcm();
-    onScreen();
+    nf.fcm();
+    nf.onScreen(context, widget.username);
+    nf.clickOnBackgroundAppNotification(context);
+    nf.initialMessage(context);
     super.initState();
   }
 
