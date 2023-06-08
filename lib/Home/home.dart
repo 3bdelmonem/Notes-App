@@ -1,12 +1,8 @@
-import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:notes/Component/customNotification.dart';
 import 'package:notes/Crud/editNote.dart';
 import 'package:notes/Component/drawer.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:elegant_notification/elegant_notification.dart';
 
 class Home extends StatefulWidget {
   final String id;
