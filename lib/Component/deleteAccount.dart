@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'loading.dart';
 
@@ -12,15 +13,15 @@ delAccount(context, String id, String email, String password) async {
       return AlertDialog(
         backgroundColor: Color(0xFF0F0F1E),
         title: Text("Are you sure you want to Delete Account ?"),
-        titleTextStyle: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-        titlePadding: EdgeInsets.symmetric(horizontal: 10),
-        icon: Icon(Icons.warning_amber_outlined, color: Colors.red, size: 60,),
-        iconPadding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 22.sp, fontWeight: FontWeight.bold),
+        titlePadding: EdgeInsets.symmetric(horizontal: 10).w,
+        icon: Icon(Icons.warning_amber_outlined, color: Colors.red, size: 60.r,),
+        iconPadding: EdgeInsets.fromLTRB(10.w, 20.h, 10.w, 10.h),
         shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.red, width: 4, strokeAlign: BorderSide.strokeAlignInside),
-          borderRadius: BorderRadius.circular(25)
+          side: BorderSide(color: Colors.red, width: 4.w, strokeAlign: BorderSide.strokeAlignInside),
+          borderRadius: BorderRadius.circular(25.r)
         ),
-        actionsPadding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+        actionsPadding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 20.h),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
           ElevatedButton(
@@ -61,26 +62,26 @@ delAccount(context, String id, String email, String password) async {
               },);
               Navigator.of(context).pushReplacementNamed("SplashScreen");
             },
-            child: Text("Yes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            child: Text("Yes", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp)),
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(135, 40),
+              minimumSize: Size(135.w, 40.h),
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60))),
+                  borderRadius: BorderRadius.circular(60.r))),
           ),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("No", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+            child: Text("No", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp)),
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(135, 40),
+              minimumSize: Size(135.w, 40.h),
               backgroundColor: Color(0xFF0F0F1E),
               foregroundColor: Colors.red,
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.red, width: 3, strokeAlign: BorderSide.strokeAlignInside),
-                borderRadius: BorderRadius.circular(60))),
+                side: BorderSide(color: Colors.red, width: 3.w, strokeAlign: BorderSide.strokeAlignInside),
+                borderRadius: BorderRadius.circular(60.r))),
           )
         ],
       );

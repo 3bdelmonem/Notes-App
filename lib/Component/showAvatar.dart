@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 class ShowAvatar extends StatelessWidget {
   static Future<Image> getImage() async {
@@ -29,7 +30,7 @@ class ShowAvatar extends StatelessWidget {
                       return Image(image: snapshot.data!.image, fit: BoxFit.cover);
                     }
                     else{
-                      return Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6,));
+                      return Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6.w,));
                     }
                   },
                 )
@@ -40,14 +41,14 @@ class ShowAvatar extends StatelessWidget {
       },
       child: CircleAvatar(
         backgroundColor: Color(0xFF6034A6),
-        radius: 40,
+        radius: 40.r,
         child: Container(
-          width: 75,
-          height: 75,
+          width: 75.w,
+          height: 75.h,
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
             color: Color(0xFF0F0F1E),
-            borderRadius: BorderRadius.circular(360)
+            borderRadius: BorderRadius.circular(360.r)
           ),
           child: FutureBuilder(
             future: getImage(),
@@ -56,7 +57,7 @@ class ShowAvatar extends StatelessWidget {
                 return Image(image: snapshot.data!.image, fit: BoxFit.cover,);
               }
               else{
-                return CircularProgressIndicator();
+                return CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6.w,);
               }
             },
           )

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -81,41 +82,41 @@ class SignupAndLoginValidation {
             return AlertDialog(
               backgroundColor: Color(0xFF0F0F1E),
               title: Text("The account already exists for that email"),
-              titleTextStyle: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-              titlePadding: EdgeInsets.symmetric(horizontal: 10),
-              icon: Icon(Icons.email, color: Colors.red, size: 60,),
-              iconPadding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+              titleTextStyle: TextStyle(color: Colors.white, fontSize: 22.sp, fontWeight: FontWeight.bold),
+              titlePadding: EdgeInsets.symmetric(horizontal: 10).w,
+              icon: Icon(Icons.email, color: Colors.red, size: 60.r,),
+              iconPadding: EdgeInsets.fromLTRB(10.w, 20.h, 10.w, 10.h),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.red, width: 4, strokeAlign: BorderSide.strokeAlignInside),
-                borderRadius: BorderRadius.circular(25)
+                side: BorderSide(color: Colors.red, width: 4.w, strokeAlign: BorderSide.strokeAlignInside),
+                borderRadius: BorderRadius.circular(25.r)
               ),
-              actionsPadding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+              actionsPadding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 20.h),
               actionsAlignment: MainAxisAlignment.spaceEvenly,
               actions: [
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed("Login");
                   },
-                  child: Text("Login", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: Text("Login", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp)),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(135, 40),
+                    minimumSize: Size(135.w, 40.h),
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(60))),
+                        borderRadius: BorderRadius.circular(60.r))),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp)),
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(135, 40),
+                    minimumSize: Size(135.w, 40.h),
                     backgroundColor: Color(0xFF0F0F1E),
                     foregroundColor: Colors.red,
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.red, width: 3, strokeAlign: BorderSide.strokeAlignInside),
-                        borderRadius: BorderRadius.circular(60))),
+                        side: BorderSide(color: Colors.red, width: 3.w, strokeAlign: BorderSide.strokeAlignInside),
+                        borderRadius: BorderRadius.circular(60.r))),
                 )
               ],
             );
@@ -172,41 +173,41 @@ class SignupAndLoginValidation {
             return AlertDialog(
               backgroundColor: Color(0xFF0F0F1E),
               title: Text("No user found for that email"),
-              titleTextStyle: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-              titlePadding: EdgeInsets.symmetric(horizontal: 15),
-              icon: Icon(Icons.email, color: Colors.red, size: 60,),
-              iconPadding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+              titleTextStyle: TextStyle(color: Colors.white, fontSize: 22.sp, fontWeight: FontWeight.bold),
+              titlePadding: EdgeInsets.symmetric(horizontal: 15).w,
+              icon: Icon(Icons.email, color: Colors.red, size: 60.r,),
+              iconPadding: EdgeInsets.fromLTRB(10.w, 20.h, 10.w, 10.h),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.red, width: 4, strokeAlign: BorderSide.strokeAlignInside),
-                borderRadius: BorderRadius.circular(25)
+                side: BorderSide(color: Colors.red, width: 4.w, strokeAlign: BorderSide.strokeAlignInside),
+                borderRadius: BorderRadius.circular(25.r)
               ),
-              actionsPadding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+              actionsPadding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 20.h),
               actionsAlignment: MainAxisAlignment.spaceEvenly,
               actions: [
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed("SignUp");
                   },
-                  child: Text("Sign Up", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: Text("Sign Up", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp)),
                   style: ElevatedButton.styleFrom(
-                            minimumSize: Size(135, 40),
+                            minimumSize: Size(135.w, 40.h),
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(60))),
+                                borderRadius: BorderRadius.circular(60.r))),
                 ),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp)),
                   style: ElevatedButton.styleFrom(
-                            minimumSize: Size(135, 40),
+                            minimumSize: Size(135.w, 40.h),
                             backgroundColor: Color(0xFF0F0F1E),
                             foregroundColor: Colors.red,
                             shape: RoundedRectangleBorder(
-                                side: BorderSide(color: Colors.red, width: 3, strokeAlign: BorderSide.strokeAlignInside),
-                                borderRadius: BorderRadius.circular(60))),
+                                side: BorderSide(color: Colors.red, width: 3.w, strokeAlign: BorderSide.strokeAlignInside),
+                                borderRadius: BorderRadius.circular(60.r))),
                 )
               ],
             );
@@ -221,28 +222,28 @@ class SignupAndLoginValidation {
             return AlertDialog(
               backgroundColor: Color(0xFF0F0F1E),
               title: Text("Wrong password"),
-              titleTextStyle: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
-              titlePadding: EdgeInsets.symmetric(horizontal: 30),
-              icon: Icon(Icons.privacy_tip_sharp, color: Colors.red, size: 60,),
-              iconPadding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+              titleTextStyle: TextStyle(color: Colors.white, fontSize: 22.sp, fontWeight: FontWeight.bold),
+              titlePadding: EdgeInsets.symmetric(horizontal: 30).w,
+              icon: Icon(Icons.privacy_tip_sharp, color: Colors.red, size: 60.r,),
+              iconPadding: EdgeInsets.fromLTRB(10.w, 20.h, 10.w, 10.h),
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.red, width: 4, strokeAlign: BorderSide.strokeAlignInside),
-                borderRadius: BorderRadius.circular(25)
+                side: BorderSide(color: Colors.red, width: 4.w, strokeAlign: BorderSide.strokeAlignInside),
+                borderRadius: BorderRadius.circular(25.r)
               ),
-              actionsPadding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+              actionsPadding: EdgeInsets.fromLTRB(10.w, 20.h, 10.w, 20.h),
               actionsAlignment: MainAxisAlignment.center,
               actions: [
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  child: Text("Cancel", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.sp)),
                   style: ElevatedButton.styleFrom(
-                            minimumSize: Size(135, 40),
+                            minimumSize: Size(135.w, 40.h),
                             backgroundColor: Colors.red,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(60))),
+                                borderRadius: BorderRadius.circular(60.r))),
                 )
               ],
             );

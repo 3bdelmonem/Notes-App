@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class Info extends StatefulWidget {
@@ -19,34 +20,34 @@ class _InfoState extends State<Info> {
 
   changeIcon(){
     if(widget.title == "Username"){
-      return Icon(Icons.person, color: Color(0xFF6034A6), size: 45);
+      return Icon(Icons.person, color: Color(0xFF6034A6), size: 45.r);
     }
     if(widget.title == "Email"){
-      return Icon(Icons.email, color: Color(0xFF6034A6), size: 45);
+      return Icon(Icons.email, color: Color(0xFF6034A6), size: 45.r);
     }
     if(widget.title == "Password"){
-      return Icon(Icons.lock_person, color: Color(0xFF6034A6), size: 45);
+      return Icon(Icons.lock_person, color: Color(0xFF6034A6), size: 45.r);
     }
     else{
-      return Icon(Icons.person, color: Color(0xFF6034A6), size: 45);
+      return Icon(Icons.person, color: Color(0xFF6034A6), size: 45.r);
     }
   }
   
-  Icon visibleIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 30);
-  Icon hiddenIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 30);
+  Icon visibleIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 30.r);
+  Icon hiddenIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 30.r);
   late Icon activeIcon = widget.show == true ? visibleIcon : hiddenIcon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 100.h,
       alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(vertical: 15),
+      margin: EdgeInsets.symmetric(vertical: 15).h,
       decoration: BoxDecoration(
           color: Color(0xFF0F0F1E),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15.r),
           boxShadow: [
-            BoxShadow(color: Color(0xFF6034A6), offset: Offset(5, 5)),
+            BoxShadow(color: Color(0xFF6034A6), offset: Offset(5.w, 5.h)),
           ]
         ),
       child: Row(
@@ -56,24 +57,24 @@ class _InfoState extends State<Info> {
             children: [
               changeIcon(),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 10).w,
                 child: VerticalDivider(
                   color: Color(0xFF6034A6),
-                  indent: 25,
-                  endIndent: 25,
-                  thickness: 3,
+                  indent: 25.h,
+                  endIndent: 25.h,
+                  thickness: 3.r,
                 ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("${widget.title}", style: TextStyle(color: Color(0xFF6034A6),fontSize: 22,fontWeight: FontWeight.bold)),
+                  Text("${widget.title}", style: TextStyle(color: Color(0xFF6034A6),fontSize: 22.sp, fontWeight: FontWeight.bold)),
                   SizedBox(
-                    width: 200,
+                    width: 200.w,
                     child: widget.show == true ? 
-                      Text("${widget.content}", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis, maxLines: 3,)
-                      :Text("${"*"*widget.content.length}", style: TextStyle(color: Color(0xFF6034A6), fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text("${widget.content}", style: TextStyle(color: Colors.white, fontSize: 18.sp, fontWeight: FontWeight.w500), overflow: TextOverflow.ellipsis, maxLines: 3,)
+                      :Text("${"*"*widget.content.length}", style: TextStyle(color: Color(0xFF6034A6), fontSize: 18.sp, fontWeight: FontWeight.bold)),
                     ),
                 ],
               ),
@@ -90,54 +91,6 @@ class _InfoState extends State<Info> {
           ),
         ],
       ) 
-
     );
   }
 }
-
-
-// Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceAround,
-//         children: [
-//           changeIcon(),
-//           Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Text("${widget.title}", style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold)),
-//               SizedBox(
-//                 width: 200,
-//                 child: Text("${widget.content}", style: TextStyle(color: Color(0xFFAEAEB3), fontSize: 16), overflow: TextOverflow.ellipsis, maxLines: 3,)
-//                 ),
-//             ],
-//           ),
-//           InkWell(
-//             onTap: () {
-//               setState(() {
-//                 widget.show = !widget.show;
-//                 activeIcon = widget.show == true ? visibleIcon : hiddenIcon;
-//               });
-//             },
-//             child: activeIcon
-//           ),
-//         ],
-//       ) 
-
-
-// ListTile(
-//         leading: changeIcon(),
-//         title: Text("${widget.title}", style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold)),
-//         subtitle: widget.show == true ? 
-//                   Text("${widget.content}", style: TextStyle(color: Color(0xFFAEAEB3), fontSize: 16), overflow: TextOverflow.ellipsis, maxLines: 3,)
-//                   :Text("${"*"*widget.content.length}", style: TextStyle(color: Color(0xFF6034A6), fontSize: 16, fontWeight: FontWeight.bold)),
-//         trailing: IconButton(
-//           onPressed: () {
-//             setState(() {
-//               widget.show = !widget.show;
-//               activeIcon = widget.show == true ? visibleIcon : hiddenIcon;
-//             });
-//           },
-//           icon: activeIcon
-//         ),
-//         isThreeLine: false,
-//       ),

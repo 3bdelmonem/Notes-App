@@ -4,6 +4,7 @@ import 'package:elegant_notification/elegant_notification.dart';
 import 'package:elegant_notification/resources/arrays.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
 class NotesNotification {
@@ -37,17 +38,17 @@ class NotesNotification {
   onScreen(context) async {
     FirebaseMessaging.onMessage.listen((event) {
       ElegantNotification(
-        title: Text("${event.notification!.title}", style: TextStyle(color: Color(0xFF6034A6), fontWeight: FontWeight.bold, fontSize: 22)),
-        description: Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 16)),
+        title: Text("${event.notification!.title}", style: TextStyle(color: Color(0xFF6034A6), fontWeight: FontWeight.bold, fontSize: 22.sp)),
+        description: Text("${event.notification!.body}", style: TextStyle(color: Colors.white, fontSize: 16.sp)),
         icon: Image(image: AssetImage("Assets/notesNotification.png"), fit: BoxFit.contain),
         progressIndicatorColor: Color(0xFF6034A6),
         animation: AnimationType.fromTop,
         animationDuration: Duration(seconds: 3),
         showProgressIndicator: false,
         background: Colors.grey.shade800,
-        radius: 20,
+        radius: 20.r,
         width: double.infinity,
-        height: 100,
+        height: 100.h,
       ).show(context);
       log(event.notification!.body.toString());
     });

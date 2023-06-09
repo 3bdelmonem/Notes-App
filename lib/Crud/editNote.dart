@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EditNote extends StatefulWidget{
@@ -46,7 +47,7 @@ class _EditNoteState extends State<EditNote>{
         appBar: AppBar(
           backgroundColor: Color(0xFF6034A6),
           foregroundColor: Colors.white,
-          leadingWidth: 150,
+          leadingWidth: 150.w,
           leading: InkWell(
             onTap: () async{
               if(titleController.text != "" || contentController.text != ""){
@@ -77,20 +78,20 @@ class _EditNoteState extends State<EditNote>{
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25),
+                  padding: const EdgeInsets.only(left: 15).w,
+                  child: Icon(Icons.arrow_back_ios, color: Colors.white, size: 25.r),
                 ),
-                Text("Notes", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
+                Text("Notes", style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700, color: Colors.white)),
               ],
             ),
           ),
           actions: [
             MediaQuery.of(context).viewInsets.bottom != 0 ?
             Container(alignment: Alignment.center,
-            padding: EdgeInsets.only(right: 15),
+            padding: EdgeInsets.only(right: 15).w,
               child: InkWell(
                 onTap: ()=> FocusScope.of(context).unfocus(),
-                child: Text("Done", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white))
+                child: Text("Done", style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700, color: Colors.white))
               ),
             ):
             SizedBox()
@@ -99,7 +100,7 @@ class _EditNoteState extends State<EditNote>{
         body: 
           Container(
             height: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
             color: Color(0xFF0F0F1E),
             child:SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -113,14 +114,14 @@ class _EditNoteState extends State<EditNote>{
                       maxLength: 65,
                       maxLines: null,
                       cursorColor: Color(0xFF6034A6),
-                      style: TextStyle(color: Colors.white ,fontSize: 30, fontWeight: FontWeight.bold),
+                      style: TextStyle(color: Colors.white ,fontSize: 30.sp, fontWeight: FontWeight.bold),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         fillColor: Colors.white,
                         focusColor: Color(0xFF6034A6),
                         hintText: "title",
                         counterText: "",
-                        hintStyle: TextStyle(color: Colors.white30 ,fontSize: 26) ,
+                        hintStyle: TextStyle(color: Colors.white30 ,fontSize: 26.sp) ,
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide.none
                         ),
@@ -135,7 +136,7 @@ class _EditNoteState extends State<EditNote>{
                       minLines: 18,
                       maxLines: null,
                       cursorColor: Color(0xFF6034A6),
-                      style: TextStyle(color: Colors.white ,fontSize: 18),
+                      style: TextStyle(color: Colors.white ,fontSize: 18.sp),
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         fillColor: Colors.white,

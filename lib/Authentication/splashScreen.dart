@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({super.key});
@@ -14,37 +15,37 @@ class _splashScreenState extends State<splashScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(child: Image.asset("Assets/notesLogo.png", height: 250, fit: BoxFit.contain)),
+          Center(child: Image.asset("Assets/notesLogo.png", height: 250.h, fit: BoxFit.contain)),
           Padding(
-            padding: const EdgeInsets.only(top: 70),
+            padding: const EdgeInsets.only(top: 70).h,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, "Login");
               },
               child: Text("Login", style: Theme.of(context).textTheme.button),
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(370, 60),
+                minimumSize: Size(370.w, 60.h),
                 backgroundColor: Color(0xFF6034A6),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(60)
+                  borderRadius: BorderRadius.circular(60.r)
                 )
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: const EdgeInsets.only(top: 20).h,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushReplacementNamed(context, "SignUp");
               },
-              child: Text("Sign Up", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              child: Text("Sign Up", style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold)),
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(370, 60),
+                minimumSize: Size(370.w, 60.h),
                 backgroundColor: Color(0xFF0F0F1E),
                 foregroundColor: Color(0xFF6034A6),
                 shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Color(0xFF6034A6), width: 2, strokeAlign: BorderSide.strokeAlignInside),
-                  borderRadius: BorderRadius.circular(60)
+                  side: BorderSide(color: Color(0xFF6034A6), width: 2.w, strokeAlign: BorderSide.strokeAlignInside),
+                  borderRadius: BorderRadius.circular(60.r)
                 )
               ),
             ),

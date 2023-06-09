@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:notes/Component/customNotification.dart';
 import 'package:notes/Crud/editNote.dart';
 import 'package:notes/Component/drawer.dart';
@@ -23,7 +26,7 @@ class _HomeState extends State<Home> {
   late CollectionReference notes = FirebaseFirestore.instance.collection("notes").doc(widget.id).collection("userNotes");
 
   NotesNotification nf = NotesNotification();
-
+  
   @override
   void initState() {
     nf.fcm();
@@ -43,7 +46,7 @@ class _HomeState extends State<Home> {
           builder: (BuildContext context) {
             return IconButton(
               onPressed: () => Scaffold.of(context).openDrawer(),
-              icon: Icon(Icons.menu, size: 30),
+              icon: Icon(Icons.menu, size: 30.r),
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );
           }
@@ -51,12 +54,12 @@ class _HomeState extends State<Home> {
         elevation: 0,
         backgroundColor: Color(0xFF6034A6),
         foregroundColor: Colors.white,
-        title: Text(widget.username, style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white)),
+        title: Text(widget.username, style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700, color: Colors.white)),
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () => Navigator.of(context).pushNamed("AddNote"), 
-            icon: Icon(Icons.add, size: 30)
+            icon: Icon(Icons.add, size: 30.r)
           )
         ],
       ),
@@ -66,7 +69,7 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
-              padding: EdgeInsets.all(15),
+              padding: EdgeInsets.all(15).r,
               physics: BouncingScrollPhysics(),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
@@ -81,24 +84,24 @@ class _HomeState extends State<Home> {
                   direction: DismissDirection.endToStart,
                   background: Container(
                     alignment: Alignment.centerRight,
-                    margin: EdgeInsets.symmetric(vertical: 20),
-                    padding: EdgeInsets.only(right: 20),
+                    margin: EdgeInsets.symmetric(vertical: 20).h,
+                    padding: EdgeInsets.only(right: 20).w,
                     decoration: BoxDecoration(
                         color: Colors.red,
-                        borderRadius: BorderRadius.circular(15)),
+                        borderRadius: BorderRadius.circular(15.r)),
                     child:
-                        Icon(Icons.delete, color: Colors.white, size: 35),
+                        Icon(Icons.delete, color: Colors.white, size: 35.r),
                   ),
                   key: Key(snapshot.data!.docs[index]["noteId"]),
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 10),
+                    margin: EdgeInsets.symmetric(vertical: 10).h,
                     decoration: BoxDecoration(
                         gradient: RadialGradient(
                           colors: [Color(0xFF4833A6), Color(0xFF6034A6)],
-                          radius: 2.5,
-                          focalRadius: 25
+                          radius: 2.5.r,
+                          focalRadius: 25.r
                         ),
-                        borderRadius: BorderRadius.circular(15)),
+                        borderRadius: BorderRadius.circular(15.r)),
                     child: ListTile(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -111,20 +114,20 @@ class _HomeState extends State<Home> {
                                       ["content"],
                                 )));
                       },
-                      contentPadding: EdgeInsets.fromLTRB(10, 5, 15, 5),
+                      contentPadding: EdgeInsets.fromLTRB(10.w, 5.h, 15.w, 5.h),
                       leading: Icon(Icons.note,
-                          color: Color(0xFF0F0F1E), size: 50),
+                          color: Color(0xFF0F0F1E), size: 50.r),
                       title: Text("${snapshot.data!.docs[index]["title"]}",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 22,
+                              fontSize: 22.sp,
                               fontWeight: FontWeight.bold)),
                       subtitle: SizedBox(
-                        width: 200,
+                        width: 200.w,
                         child: Text(
                           "${snapshot.data!.docs[index]["content"]}",
                           style: TextStyle(
-                              color: Color(0xFFAEAEB3), fontSize: 11),
+                              color: Color(0xFFAEAEB3), fontSize: 11.sp),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 3,
                         ),
@@ -137,21 +140,21 @@ class _HomeState extends State<Home> {
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6));
+            return Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6.w));
           }
           if (snapshot.hasError) {
             return Center(
                 child: Text("Error.. Try Again Later",
                     style: TextStyle(
                         color: Colors.red,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w700)));
           }
           return Center(
               child: Text("Write It Down Before You Forget It",
                   style: TextStyle(
                       color: Colors.white54,
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w700)));
         },
       ),

@@ -10,6 +10,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:notes/Authentication/splashScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'Component/customNotification.dart';
 
 late bool isActive;
 late String id;
@@ -21,10 +24,12 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   log("Handling a background message: ${message.notification!.body}");
 }
 
+NotesNotification nf = NotesNotification();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  
+  nf.fcm();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -46,30 +51,32 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // home: Loading(),
-      home: isActive == true
-          ? Home(
-              id: id,
-              username: username,
-              email: email,
-              password: password,
-            )
-          : splashScreen(),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        "Login": (context) => Login(),
-        "SignUp": (context) => SignUp(),
-        "AddNote": (context) => AddNote(),
-        "SplashScreen": (context) => splashScreen(),
-        "Help": (context) => HelpScreen(),
-      },
-      theme: ThemeData(
-          primaryColor: Color(0xFF6034A6),
-          textTheme: TextTheme(
-            labelLarge: TextStyle(
-                color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-          )),
+    return ScreenUtilInit(
+      builder:(context, child) => MaterialApp(
+        home: isActive == true
+            ? Home(
+                id: id,
+                username: username,
+                email: email,
+                password: password,
+              )
+            : splashScreen(),
+        debugShowCheckedModeBanner: false,
+        routes: {
+          "Login": (context) => Login(),
+          "SignUp": (context) => SignUp(),
+          "AddNote": (context) => AddNote(),
+          "SplashScreen": (context) => splashScreen(),
+          "Help": (context) => HelpScreen(),
+        },
+        theme: ThemeData(
+            primaryColor: Color(0xFF6034A6),
+            textTheme: TextTheme(
+              labelLarge: TextStyle(
+                  color: Colors.white, fontSize: 24.sp, fontWeight: FontWeight.bold),
+            )),
+      ),
+      designSize: Size(411.42857142857144, 867.4285714285714),
     );
   }
 }

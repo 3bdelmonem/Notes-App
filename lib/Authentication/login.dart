@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:notes/Authentication/signupAndLoginValidation.dart';
 
 class Login extends StatefulWidget{
@@ -12,9 +13,9 @@ class _LoginState extends State<Login>{
   GlobalKey<FormState> _formState = new GlobalKey<FormState>();
   
   bool seePassword = true;
-  Icon hiddenIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
-  Icon visibleIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22);
-  Icon passordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
+  Icon hiddenIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22.r);
+  Icon visibleIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22.r);
+  Icon passordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22.r);
 
   @override
   Widget build(BuildContext context){
@@ -23,14 +24,14 @@ class _LoginState extends State<Login>{
       child: Scaffold(
         body: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(10).r,
           color: Color(0xFF0F0F1E),
           child: SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Center(child: Image.asset("Assets/notesLogo.png", height: 250, fit: BoxFit.contain,)),
+                Center(child: Image.asset("Assets/notesLogo.png", height: 250.h, fit: BoxFit.contain,)),
                 Form(
                   key: _formState,
                   child: Column(
@@ -49,28 +50,27 @@ class _LoginState extends State<Login>{
                       style: TextStyle(color: Colors.white),
                       decoration: InputDecoration(
                         hintText: "Email",
-                        prefixIcon: Icon(Icons.person, color: Color(0xFF6034A6), size: 30,),
+                        prefixIcon: Icon(Icons.person, color: Color(0xFF6034A6), size: 30.r,),
                         hintStyle: TextStyle(color:Color(0xFFAEAEB3)),
-                        // enabled: true,
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF6034A6)),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                          borderRadius: BorderRadius.circular(35.r)
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF6034A6)),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                          borderRadius: BorderRadius.circular(35.r)
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Colors.red),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Colors.red),
+                          borderRadius: BorderRadius.circular(35.r)
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF6034A6)),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                          borderRadius: BorderRadius.circular(35.r)
                         ), 
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     TextFormField(
                       validator: (value) {
                         // (?=.*[A-Z])       ===> should contain at least one upper case
@@ -100,30 +100,30 @@ class _LoginState extends State<Login>{
                           icon: passordIcon,
                         ),
                         hintText: "Password",
-                        prefixIcon: Icon(Icons.lock_person, color: Color(0xFF6034A6), size: 30,),
+                        prefixIcon: Icon(Icons.lock_person, color: Color(0xFF6034A6), size: 30.r,),
                         hintStyle: TextStyle(color:Color(0xFFAEAEB3)),
                         // enabled: true,
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF6034A6)),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                          borderRadius: BorderRadius.circular(35.r)
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF6034A6)),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                          borderRadius: BorderRadius.circular(35.r)
                         ),
                         focusedErrorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Colors.red),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Colors.red),
+                          borderRadius: BorderRadius.circular(35.r)
                         ),
                         errorBorder: OutlineInputBorder(
-                          borderSide: BorderSide(width: 2, color: Color(0xFF6034A6)),
-                          borderRadius: BorderRadius.circular(35)
+                          borderSide: BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                          borderRadius: BorderRadius.circular(35.r)
                         ),
                       ),
                     ),
                   
                     Padding(
-                      padding: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.only(top: 20).h,
                       child: ElevatedButton(
                         onPressed: () async{
                           if(_formState.currentState!.validate()){
@@ -136,26 +136,26 @@ class _LoginState extends State<Login>{
                         },
                         child: Text("Login", style: Theme.of(context).textTheme.labelLarge),
                         style: ElevatedButton.styleFrom(
-                          minimumSize: Size(370, 60),
+                          minimumSize: Size(370.w, 60.h),
                           backgroundColor: Color(0xFF6034A6),
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(60)
+                            borderRadius: BorderRadius.circular(60.r)
                           )
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(15),
+                      padding: EdgeInsets.all(15).r,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Don't have an account? ", style: TextStyle(color: Colors.white, fontSize: 16)),
+                            Text("Don't have an account? ", style: TextStyle(color: Colors.white, fontSize: 16.sp)),
                             InkWell(
                               onTap: (){
                                 Navigator.of(context).pushNamed("SignUp");
                               },
-                              child: Text("Sign Up Now", style: TextStyle(color: Color(0xFF6034A6), fontSize: 16, fontWeight: FontWeight.bold))
+                              child: Text("Sign Up Now", style: TextStyle(color: Color(0xFF6034A6), fontSize: 16.sp, fontWeight: FontWeight.bold))
                             )
                         ],
                       ),

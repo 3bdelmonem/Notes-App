@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 showLoading(BuildContext context) {
      showDialog(
@@ -9,7 +10,7 @@ showLoading(BuildContext context) {
         return Dialog(
           backgroundColor: Colors.transparent,
           insetPadding: EdgeInsets.zero,
-          child: Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6,))
+          child: Center(child: CircularProgressIndicator(color: Color(0xFF6034A6), strokeWidth: 6.w))
         );
       },
     );

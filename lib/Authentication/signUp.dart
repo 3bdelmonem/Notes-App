@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:notes/Authentication/signupAndLoginValidation.dart';
 
 
@@ -18,10 +19,10 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordController = new TextEditingController();
   TextEditingController confirmPasswordController = new TextEditingController();
 
-  var hiddenIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
-  var visibleIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22);
-  var passordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
-  var confirmPassordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22);
+  var hiddenIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22.r);
+  var visibleIcon = Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 22.r);
+  var passordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22.r);
+  var confirmPassordIcon = Icon(Icons.remove_red_eye, color: Color(0xFF6034A6), size: 22.r);
 
   
   @override
@@ -31,7 +32,7 @@ class _SignUpState extends State<SignUp> {
       child: Scaffold(
         body: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10).r,
         color: Color(0xFF0F0F1E),
         child: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -41,7 +42,7 @@ class _SignUpState extends State<SignUp> {
               Center(
                   child: Image.asset(
                 "Assets/notesLogo.png",
-                height: 250,
+                height: 250.h,
                 fit: BoxFit.contain,
               )),
               Form(
@@ -63,29 +64,29 @@ class _SignUpState extends State<SignUp> {
                           prefixIcon: Icon(
                             Icons.person,
                             color: Color(0xFF6034A6),
-                            size: 30,
+                            size: 30.r,
                           ),
                           hintStyle: TextStyle(color: Color(0xFFAEAEB3)),
                           // enabled: true,
                           enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(width: 2, color: Color(0xFF6034A6)),
-                              borderRadius: BorderRadius.circular(35)),
+                                  BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                              borderRadius: BorderRadius.circular(35.r)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(width: 2, color: Color(0xFF6034A6)),
-                              borderRadius: BorderRadius.circular(35)),
+                                  BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                              borderRadius: BorderRadius.circular(35.r)),
                           focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 2, color: Colors.red),
-                              borderRadius: BorderRadius.circular(35)),
+                              borderSide: BorderSide(width: 2.w, color: Colors.red),
+                              borderRadius: BorderRadius.circular(35.r)),
                           errorBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(width: 2, color: Color(0xFF6034A6)),
-                              borderRadius: BorderRadius.circular(35)),
+                                  BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                              borderRadius: BorderRadius.circular(35.r)),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 20).h,
                         child: TextFormField(
                           controller: emailController,
                           validator: (value) {
@@ -103,31 +104,30 @@ class _SignUpState extends State<SignUp> {
                             prefixIcon: Icon(
                               Icons.email,
                               color: Color(0xFF6034A6),
-                              size: 30,
+                              size: 30.r,
                             ),
                             hintStyle: TextStyle(color: Color(0xFFAEAEB3)),
-                            // enabled: true,
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    width: 2, color: Color(0xFF6034A6)),
-                                borderRadius: BorderRadius.circular(35)),
+                                    width: 2.w, color: Color(0xFF6034A6)),
+                                borderRadius: BorderRadius.circular(35.r)),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    width: 2, color: Color(0xFF6034A6)),
-                                borderRadius: BorderRadius.circular(35)),
+                                    width: 2.w, color: Color(0xFF6034A6)),
+                                borderRadius: BorderRadius.circular(35.r)),
                             focusedErrorBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(width: 2, color: Colors.red),
-                                borderRadius: BorderRadius.circular(35)),
+                                    BorderSide(width: 2.w, color: Colors.red),
+                                borderRadius: BorderRadius.circular(35.r)),
                             errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    width: 2, color: Color(0xFF6034A6)),
-                                borderRadius: BorderRadius.circular(35)),
+                                    width: 2.w, color: Color(0xFF6034A6)),
+                                borderRadius: BorderRadius.circular(35.r)),
                           ),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
+                        padding: const EdgeInsets.only(bottom: 20).h,
                         child: TextFormField(
                           controller: passwordController,
                           validator: (value) {
@@ -157,26 +157,26 @@ class _SignUpState extends State<SignUp> {
                             prefixIcon: Icon(
                               Icons.lock_person,
                               color: Color(0xFF6034A6),
-                              size: 30,
+                              size: 30.r,
                             ),
                             hintStyle: TextStyle(color: Color(0xFFAEAEB3)),
                             // enabled: true,
                             enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    width: 2, color: Color(0xFF6034A6)),
-                                borderRadius: BorderRadius.circular(35)),
+                                    width: 2.w, color: Color(0xFF6034A6)),
+                                borderRadius: BorderRadius.circular(35.r)),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    width: 2, color: Color(0xFF6034A6)),
-                                borderRadius: BorderRadius.circular(35)),
+                                    width: 2.w, color: Color(0xFF6034A6)),
+                                borderRadius: BorderRadius.circular(35.r)),
                             focusedErrorBorder: OutlineInputBorder(
                                 borderSide:
-                                    BorderSide(width: 2, color: Colors.red),
-                                borderRadius: BorderRadius.circular(35)),
+                                    BorderSide(width: 2.w, color: Colors.red),
+                                borderRadius: BorderRadius.circular(35.r)),
                             errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
-                                    width: 2, color: Color(0xFF6034A6)),
-                                borderRadius: BorderRadius.circular(35)),
+                                    width: 2.w, color: Color(0xFF6034A6)),
+                                borderRadius: BorderRadius.circular(35.r)),
                           ),
                         ),
                       ),
@@ -207,29 +207,29 @@ class _SignUpState extends State<SignUp> {
                           prefixIcon: Icon(
                             Icons.lock_person,
                             color: Color(0xFF6034A6),
-                            size: 30,
+                            size: 30.r,
                           ),
                           hintStyle: TextStyle(color: Color(0xFFAEAEB3)),
                           // enabled: true,
                           enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(width: 2, color: Color(0xFF6034A6)),
-                              borderRadius: BorderRadius.circular(35)),
+                                  BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                              borderRadius: BorderRadius.circular(35.r)),
                           focusedBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(width: 2, color: Color(0xFF6034A6)),
-                              borderRadius: BorderRadius.circular(35)),
+                                  BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                              borderRadius: BorderRadius.circular(35.r)),
                           focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 2, color: Colors.red),
-                              borderRadius: BorderRadius.circular(35)),
+                              borderSide: BorderSide(width: 2.w, color: Colors.red),
+                              borderRadius: BorderRadius.circular(35.r)),
                           errorBorder: OutlineInputBorder(
                               borderSide:
-                                  BorderSide(width: 2, color: Color(0xFF6034A6)),
-                              borderRadius: BorderRadius.circular(35)),
+                                  BorderSide(width: 2.w, color: Color(0xFF6034A6)),
+                              borderRadius: BorderRadius.circular(35.r)),
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.only(top: 20).h,
                         child: ElevatedButton(
                           onPressed: () async {
                             if(_formState.currentState!.validate()){
@@ -243,21 +243,21 @@ class _SignUpState extends State<SignUp> {
                           child: Text("Sign Up",
                               style: Theme.of(context).textTheme.labelLarge),
                           style: ElevatedButton.styleFrom(
-                              minimumSize: Size(370, 60),
+                              minimumSize: Size(370.w, 60.h),
                               backgroundColor: Color(0xFF6034A6),
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(60))),
+                                  borderRadius: BorderRadius.circular(60.r))),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: EdgeInsets.all(15).r,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Already have an account? ",
                                 style:
-                                    TextStyle(color: Colors.white, fontSize: 16)),
+                                    TextStyle(color: Colors.white, fontSize: 16.sp)),
                             InkWell(
                                 onTap: () {
                                   Navigator.of(context).pushNamed("Login");
@@ -265,7 +265,7 @@ class _SignUpState extends State<SignUp> {
                                 child: Text("Login Now",
                                     style: TextStyle(
                                         color: Color(0xFF6034A6),
-                                        fontSize: 16,
+                                        fontSize: 16.sp,
                                         fontWeight: FontWeight.bold)))
                           ],
                         ),
