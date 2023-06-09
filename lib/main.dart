@@ -12,8 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'Component/customNotification.dart';
-
 late bool isActive;
 late String id;
 late String username;
