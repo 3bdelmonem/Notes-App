@@ -24,12 +24,10 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   log("Handling a background message: ${message.notification!.body}");
 }
 
-NotesNotification nf = NotesNotification();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  nf.fcm();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   final SharedPreferences prefs = await SharedPreferences.getInstance();

@@ -153,7 +153,7 @@ class _LoginState extends State<Login>{
                             Text("Don't have an account? ", style: TextStyle(color: Colors.white, fontSize: 16.sp)),
                             InkWell(
                               onTap: (){
-                                Navigator.of(context).pushNamed("SignUp");
+                                Navigator.of(context).pushReplacementNamed("SignUp");
                               },
                               child: Text("Sign Up Now", style: TextStyle(color: Color(0xFF6034A6), fontSize: 16.sp, fontWeight: FontWeight.bold))
                             )

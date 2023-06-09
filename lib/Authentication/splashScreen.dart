@@ -20,7 +20,7 @@ class _splashScreenState extends State<splashScreen> {
             padding: const EdgeInsets.only(top: 70).h,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "Login");
+                Navigator.of(context).pushReplacementNamed("Login");
               },
               child: Text("Login", style: Theme.of(context).textTheme.button),
               style: ElevatedButton.styleFrom(
@@ -36,7 +36,7 @@ class _splashScreenState extends State<splashScreen> {
             padding: const EdgeInsets.only(top: 20).h,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.pushReplacementNamed(context, "SignUp");
+                Navigator.of(context).pushReplacementNamed( "SignUp");
               },
               child: Text("Sign Up", style: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.bold)),
               style: ElevatedButton.styleFrom(
